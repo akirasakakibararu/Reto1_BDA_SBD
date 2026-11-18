@@ -1,0 +1,49 @@
+{
+  "source": "Observatorio Vasco de la Juventud",
+  "dataset": "Indicadores de juventud, tabla estadística interactiva",
+  "indicator_code": 31,
+  "indicator_id": 7836,
+  "classification_id": 295,
+  "preview_url": "https://www.gazteaukera.euskadi.eus/webgaz00-ovjstat/es/ae29aConsultaWar/indicadornum/previsualizar/7836?clid=295&locale=es",
+  "url": "https://www.gazteaukera.euskadi.eus/webgaz00-ovjstat/es/ae29aConsultaWar/indicadornum/cogerDatosTabla",
+  "method": "POST",
+  "retrieved_at_utc": "2026-11-13T20:20:39.333062+00:00",
+  "http_status": 200,
+  "content_type": "application/json;charset=UTF-8",
+  "content_length": 3644,
+  "sha256": "39c02bfb74ec31e2f636b18670de4bb673d07c9c7f7feff305b43820c8e623a7",
+  "request_payload": {
+    "FiltrarDatos": {
+      "inid": 7836,
+      "variable": [
+        "5943#9266",
+        "5943#9267",
+        "5943#9268",
+        "5943#9269",
+        "5943#9270",
+        "5943#9271",
+        "5943#9272",
+        "5943#9273",
+        "5944#9274"
+      ],
+      "periodo": [
+        "23461",
+        "22879",
+        "21572",
+        "21571",
+        "19291",
+        "18771",
+        "18772",
+        "18773",
+        "18774",
+        "18775",
+        "18776",
+        "18791",
+        "21651",
+        "21652",
+        "21653"
+      ]
+    }
+  },
+  "file": "datos\\originales\\juventud\\indicador_31_salario_portal_ovj.json"
+}

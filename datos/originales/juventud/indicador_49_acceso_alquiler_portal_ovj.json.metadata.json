@@ -1,0 +1,43 @@
+{
+  "source": "Observatorio Vasco de la Juventud",
+  "dataset": "Indicadores de juventud, tabla estadística interactiva",
+  "indicator_code": 49,
+  "indicator_id": 7980,
+  "classification_id": 255,
+  "preview_url": "https://www.gazteaukera.euskadi.eus/webgaz00-ovjstat/es/ae29aConsultaWar/indicadornum/previsualizar/7980?clid=255&locale=es",
+  "url": "https://www.gazteaukera.euskadi.eus/webgaz00-ovjstat/es/ae29aConsultaWar/indicadornum/cogerDatosTabla",
+  "method": "POST",
+  "retrieved_at_utc": "2026-11-13T20:20:39.726053+00:00",
+  "http_status": 200,
+  "content_type": "application/json;charset=UTF-8",
+  "content_length": 2031,
+  "sha256": "6e2387ee24370db76c99272097edf1a8edd9f4e4c2963dc29931246a410caa4d",
+  "request_payload": {
+    "FiltrarDatos": {
+      "inid": 7980,
+      "variable": [
+        "4683#7206",
+        "4683#7207",
+        "4683#7208",
+        "4683#7209",
+        "4683#7210",
+        "4683#7211",
+        "4683#7212",
+        "4683#7213",
+        "4683#7214"
+      ],
+      "periodo": [
+        "23478",
+        "22853",
+        "21858",
+        "21551",
+        "21552",
+        "21553",
+        "21554",
+        "21555",
+        "21556"
+      ]
+    }
+  },
+  "file": "datos\\originales\\juventud\\indicador_49_acceso_alquiler_portal_ovj.json"
+}

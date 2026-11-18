@@ -1,0 +1,21 @@
+{
+  "status": "verified",
+  "api_url": "https://api.euskadi.eus/udalmap/indicators/61/municipalities?lang=SPANISH",
+  "api_specification": "https://opendata.euskadi.eus/contenidos/recurso_tecnico/data_apirest/es_def/adjuntos/udalmap.json",
+  "source_file": "datos\\originales\\ingresos\\udalmap_renta_personal_disponible_api.json",
+  "source_sha256": "f4e69a11edc43873051d2343a4cd01800270a91a3ff3d94baee9eaac888c1b60",
+  "municipalities_returned": 252,
+  "records_returned": 4031,
+  "records_compared": 4031,
+  "expected_null_omissions": [
+    {
+      "municipality_code": "48916",
+      "year": 2023,
+      "csv_value": null
+    }
+  ],
+  "unexpected_missing_from_api": [],
+  "missing_from_csv": [],
+  "mismatches": [],
+  "output_file": "datos\\procesados\\ingresos\\udalmap_renta_api_verificacion.json"
+}

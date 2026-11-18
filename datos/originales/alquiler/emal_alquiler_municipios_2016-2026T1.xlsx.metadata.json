@@ -1,0 +1,15 @@
+{
+  "source": "EMAL - alquiler municipal",
+  "publisher": "Gobierno Vasco, Departamento de Vivienda y Agenda Urbana",
+  "format": "XLSX original",
+  "license": "CC BY 4.0",
+  "url": "https://opendata.euskadi.eus/contenidos/estadistica/122417_emal_tablas_estad/opendata/EMAL.-Barrios-Municipios.-2016-2026_es.xlsx",
+  "downloaded_at_utc": "2026-11-13T18:50:06.822048+00:00",
+  "http_status": 200,
+  "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "content_length": 256980,
+  "etag": null,
+  "last_modified": "Mon, 26 Oct 2026 14:30:10 GMT",
+  "sha256": "f4d27d4e8e9bd3688d4e7a454026a4a0884073dc73e3fc1c0da4891a1ad1af5c",
+  "file": "datos\\originales\\alquiler\\emal_alquiler_municipios_2016-2026T1.xlsx"
+}

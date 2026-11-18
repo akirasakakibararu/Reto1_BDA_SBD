@@ -1,0 +1,45 @@
+{
+  "source": "Observatorio Vasco de la Juventud",
+  "dataset": "Indicadores de juventud, tabla estadística interactiva",
+  "indicator_code": 32,
+  "indicator_id": 8443,
+  "classification_id": 295,
+  "preview_url": "https://www.gazteaukera.euskadi.eus/webgaz00-ovjstat/es/ae29aConsultaWar/indicadornum/previsualizar/8443?clid=295&locale=es",
+  "url": "https://www.gazteaukera.euskadi.eus/webgaz00-ovjstat/es/ae29aConsultaWar/indicadornum/cogerDatosTabla",
+  "method": "POST",
+  "retrieved_at_utc": "2026-11-13T20:20:39.538052+00:00",
+  "http_status": 200,
+  "content_type": "application/json;charset=UTF-8",
+  "content_length": 1486,
+  "sha256": "00938f6d6b243c8e8d055f092d111758485fa102c52f7fc58abb63b9684f9f5b",
+  "request_payload": {
+    "FiltrarDatos": {
+      "inid": 8443,
+      "variable": [
+        "23#252",
+        "23#253",
+        "23#254"
+      ],
+      "periodo": [
+        "25262",
+        "23482",
+        "23154",
+        "22476",
+        "22475",
+        "22474",
+        "22473",
+        "22472",
+        "22471",
+        "22470",
+        "22469",
+        "22468",
+        "22467",
+        "22466",
+        "22465",
+        "22464",
+        "22463"
+      ]
+    }
+  },
+  "file": "datos\\originales\\juventud\\indicador_32_renta_personal_portal_ovj.json"
+}

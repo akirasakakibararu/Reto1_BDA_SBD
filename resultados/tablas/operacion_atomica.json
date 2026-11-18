@@ -1,0 +1,14 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "collection": "operaciones_atomicas",
+  "operation": "update_one with $inc and upsert",
+  "atomic_update_count_before": 4,
+  "atomic_update_count_after": 5,
+  "matched_count": 1,
+  "modified_count": 1,
+  "upserted_id": null,
+  "transaction_required": false,
+  "transaction_reason": "Each source observation is an independently keyed record. The ETL uses deterministic upserts and verifies the full batch; there is no business invariant requiring a multi-document transaction. A single-document $inc is atomic.",
+  "timestamp_utc": "2026-11-13T19:22:00.905880+00:00"
+}

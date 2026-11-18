@@ -1,0 +1,52 @@
+{
+  "verified": true,
+  "hdfs": {
+    "uploaded_files": {
+      "originales": 18,
+      "procesados": 10,
+      "total": 28
+    },
+    "remote_listing": {
+      "files": 28,
+      "directories": 9
+    },
+    "recovered_file": {
+      "relative_path": "datos/recuperados/verificacion_salarios_juveniles_hdfs.csv",
+      "remote_relative_path": "procesados/ingresos/salarios_juveniles_observatorio.csv",
+      "size_bytes": 8831,
+      "sha256": "b9ed5ff207184fda64c9ee0f8d3f5285888f0b50c656957babe8e8e773608293",
+      "matches_local_source": true
+    },
+    "execution_log": "logs/hdfs.log"
+  },
+  "kafka": {
+    "topic": "reto_vivienda_iabd_user11",
+    "simulated_messages_produced_and_consumed": 2,
+    "partition": 0,
+    "offsets": [
+      0,
+      1
+    ],
+    "committed_next_offset": 2,
+    "mongodb_collection": "anuncios_stream",
+    "persisted_documents": 2,
+    "monthly_rent_bson_type": "Decimal128",
+    "execution_log": "logs/kafka.log"
+  },
+  "project_validation": {
+    "python_version": "3.12.16",
+    "compiled_scripts_and_tests": true,
+    "unit_tests_passed": 19,
+    "csv_files_validated": 12,
+    "json_files_validated": 14,
+    "youth_municipal_rows": 72,
+    "unique_youth_municipality_codes": 72,
+    "territory_salary_codes": [
+      "01",
+      "20",
+      "48"
+    ],
+    "mongodb_monetary_values_decimal128": true,
+    "duplicate_salary_and_reference_dimensions": 0
+  }
+}

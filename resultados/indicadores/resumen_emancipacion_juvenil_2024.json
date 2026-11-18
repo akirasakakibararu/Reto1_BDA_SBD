@@ -1,0 +1,188 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "reference_year": 2024,
+  "municipalities_compared": 72,
+  "municipalities_with_emal_record": 73,
+  "municipalities_excluded_due_to_missing_rent": [
+    {
+      "municipality_code": "20056",
+      "municipality_name": "Mutriku",
+      "reason": "EMAL 2024 does not publish a positive monthly rent value."
+    }
+  ],
+  "income_measure": "Official mean net monthly salary of salaried 18-34 year-olds by historical territory; not municipality-observed.",
+  "municipality_scope_warning": "Each municipality is assigned the 18-34 salary mean of its territory using official territory codes; this does not assert an observed municipal salary.",
+  "comparison_period_warning": "The main comparison joins 2024 EMAL rental and population data with 2024 youth salary data.",
+  "single_person_assumption": "A single person pays the full monthly rental contract; utilities, food, transport, deposits and other costs are excluded.",
+  "thirty_percent_reference_warning": "The 30% rent-to-income threshold is an analytical reference, not a guarantee of affordability or an official eligibility rule.",
+  "formulas": {
+    "rent_as_share_of_youth_salary_percent": "monthly_rent_eur / net_monthly_youth_salary_eur * 100",
+    "money_remaining_after_rent_eur": "net_monthly_youth_salary_eur - monthly_rent_eur",
+    "recommended_max_rent_30_percent_eur": "net_monthly_youth_salary_eur * 0.30",
+    "rent_minus_recommended_max_eur": "monthly_rent_eur - recommended_max_rent_30_percent_eur"
+  },
+  "municipalities_over_30_percent": 72,
+  "municipalities_with_negative_remainder": 0,
+  "best_three_by_rent_share": [
+    {
+      "municipality_code": "48073",
+      "municipality_name": "Ondarroa",
+      "territory_code": "48",
+      "territory_name": "Bizkaia",
+      "year": 2024,
+      "population": 8195,
+      "deposit_count": 48,
+      "monthly_rent_eur": "543.44",
+      "net_monthly_youth_salary_eur": "1585.00",
+      "salary_scope": "territory_mean_applied_to_municipality",
+      "rent_as_share_of_youth_salary_percent": "34.29",
+      "money_remaining_after_rent_eur": "1041.56",
+      "recommended_max_rent_30_percent_eur": "475.50",
+      "rent_minus_recommended_max_eur": "67.94"
+    },
+    {
+      "municipality_code": "48060",
+      "municipality_name": "Markina-Xemein",
+      "territory_code": "48",
+      "territory_name": "Bizkaia",
+      "year": 2024,
+      "population": 5058,
+      "deposit_count": 43,
+      "monthly_rent_eur": "564.67",
+      "net_monthly_youth_salary_eur": "1585.00",
+      "salary_scope": "territory_mean_applied_to_municipality",
+      "rent_as_share_of_youth_salary_percent": "35.63",
+      "money_remaining_after_rent_eur": "1020.33",
+      "recommended_max_rent_30_percent_eur": "475.50",
+      "rent_minus_recommended_max_eur": "89.17"
+    },
+    {
+      "municipality_code": "20080",
+      "municipality_name": "Zumarraga",
+      "territory_code": "20",
+      "territory_name": "Gipuzkoa",
+      "year": 2024,
+      "population": 9590,
+      "deposit_count": 109,
+      "monthly_rent_eur": "569.07",
+      "net_monthly_youth_salary_eur": "1555.00",
+      "salary_scope": "territory_mean_applied_to_municipality",
+      "rent_as_share_of_youth_salary_percent": "36.60",
+      "money_remaining_after_rent_eur": "985.93",
+      "recommended_max_rent_30_percent_eur": "466.50",
+      "rent_minus_recommended_max_eur": "102.57"
+    }
+  ],
+  "worst_three_by_rent_share": [
+    {
+      "municipality_code": "20079",
+      "municipality_name": "Zarautz",
+      "territory_code": "20",
+      "territory_name": "Gipuzkoa",
+      "year": 2024,
+      "population": 23333,
+      "deposit_count": 231,
+      "monthly_rent_eur": "965.15",
+      "net_monthly_youth_salary_eur": "1555.00",
+      "salary_scope": "territory_mean_applied_to_municipality",
+      "rent_as_share_of_youth_salary_percent": "62.07",
+      "money_remaining_after_rent_eur": "589.85",
+      "recommended_max_rent_30_percent_eur": "466.50",
+      "rent_minus_recommended_max_eur": "498.65"
+    },
+    {
+      "municipality_code": "48044",
+      "municipality_name": "Getxo",
+      "territory_code": "48",
+      "territory_name": "Bizkaia",
+      "year": 2024,
+      "population": 75306,
+      "deposit_count": 596,
+      "monthly_rent_eur": "1021.74",
+      "net_monthly_youth_salary_eur": "1585.00",
+      "salary_scope": "territory_mean_applied_to_municipality",
+      "rent_as_share_of_youth_salary_percent": "64.46",
+      "money_remaining_after_rent_eur": "563.26",
+      "recommended_max_rent_30_percent_eur": "475.50",
+      "rent_minus_recommended_max_eur": "546.24"
+    },
+    {
+      "municipality_code": "20069",
+      "municipality_name": "Donostia / San Sebastián",
+      "territory_code": "20",
+      "territory_name": "Gipuzkoa",
+      "year": 2024,
+      "population": 182892,
+      "deposit_count": 2092,
+      "monthly_rent_eur": "1121.71",
+      "net_monthly_youth_salary_eur": "1555.00",
+      "salary_scope": "territory_mean_applied_to_municipality",
+      "rent_as_share_of_youth_salary_percent": "72.14",
+      "money_remaining_after_rent_eur": "433.29",
+      "recommended_max_rent_30_percent_eur": "466.50",
+      "rent_minus_recommended_max_eur": "655.21"
+    }
+  ],
+  "territory_comparison": [
+    {
+      "territory_code": "01",
+      "territory_name": "Araba/Álava",
+      "year": 2024,
+      "municipality_count": 4,
+      "total_deposits": 2512,
+      "weighted_monthly_rent_eur": "764.58",
+      "net_monthly_youth_salary_eur": "1487.00",
+      "calculated_rent_share_percent": "51.42",
+      "observatorio_rent_share_percent": "50.20",
+      "difference_percentage_points": "1.22"
+    },
+    {
+      "territory_code": "20",
+      "territory_name": "Gipuzkoa",
+      "year": 2024,
+      "municipality_count": 33,
+      "total_deposits": 6357,
+      "weighted_monthly_rent_eur": "868.93",
+      "net_monthly_youth_salary_eur": "1555.00",
+      "calculated_rent_share_percent": "55.88",
+      "observatorio_rent_share_percent": "54.90",
+      "difference_percentage_points": "0.98"
+    },
+    {
+      "territory_code": "48",
+      "territory_name": "Bizkaia",
+      "year": 2024,
+      "municipality_count": 35,
+      "total_deposits": 8210,
+      "weighted_monthly_rent_eur": "828.49",
+      "net_monthly_youth_salary_eur": "1585.00",
+      "calculated_rent_share_percent": "52.27",
+      "observatorio_rent_share_percent": "51.40",
+      "difference_percentage_points": "0.87"
+    }
+  ],
+  "age_group_comparison": [
+    {
+      "year": 2024,
+      "age_group": "18-29",
+      "net_monthly_youth_salary_eur": "1381.00",
+      "observatorio_rent_share_percent": "59.40",
+      "comparison_scope": "Euskadi, published age margins only"
+    },
+    {
+      "year": 2024,
+      "age_group": "30-34",
+      "net_monthly_youth_salary_eur": "1774.00",
+      "observatorio_rent_share_percent": "46.20",
+      "comparison_scope": "Euskadi, published age margins only"
+    }
+  ],
+  "outputs": [
+    "resultados\\indicadores\\indicadores_juveniles_municipales_2024.csv",
+    "resultados\\tablas\\comparativa_juvenil_territorial_2024.csv",
+    "resultados\\tablas\\comparativa_juvenil_edad_2024.csv",
+    "resultados\\indicadores\\resumen_emancipacion_juvenil_2024.json"
+  ],
+  "timestamp_utc": "2026-11-16T15:21:50.091397+00:00"
+}

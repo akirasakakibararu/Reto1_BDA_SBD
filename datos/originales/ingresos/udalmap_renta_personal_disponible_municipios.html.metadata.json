@@ -1,0 +1,15 @@
+{
+  "source": "Udalmap, indicador 61 - tabla HTML de renta por municipio",
+  "publisher": "Gobierno Vasco; estadística subyacente de Eustat",
+  "format": "HTML original (tabla municipal pública)",
+  "license": "CC BY 4.0",
+  "url": "https://opendata.euskadi.eus/webopd00-dataset/es/contenidos/estadistica/udalmap_indicador_61/es_def/adjuntos/indicator.shtml",
+  "downloaded_at_utc": "2026-11-13T19:14:10.004417+00:00",
+  "http_status": 200,
+  "content_type": "text/html; charset=ISO-8859-1",
+  "content_length": 488758,
+  "etag": null,
+  "last_modified": null,
+  "sha256": "c4f25fbf5a364fa699f0f3801b864f89187d0ad12be537ed3a6d2e9cd8e4db07",
+  "file": "datos\\originales\\ingresos\\udalmap_renta_personal_disponible_municipios.html"
+}

@@ -1,0 +1,159 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "reference_year": 2023,
+  "municipalities_compared": 73,
+  "source_measure_warning": "La renta personal disponible media es de residentes de 18+ años; no es salario juvenil ni nómina individual.",
+  "period_comparability_warning": "La comparación usa el año publicado 2023 de ambas series. EMAL advierte que rentas históricas pueden actualizarse por IRAV y ser provisionales; no equivale a una nómina neta juvenil contemporánea.",
+  "single_person_assumption": "Compara una renta mensual de contrato con la renta disponible media anual por persona adulta dividida entre 12; no incorpora gastos distintos del alquiler ni ingresos de otros convivientes.",
+  "formulas": {
+    "monthly_available_income_eur": "available_income_annual_eur / 12",
+    "annual_rent_eur": "monthly_rent_eur * 12",
+    "rent_as_share_of_available_income_percent": "monthly_rent_eur / monthly_available_income_eur * 100",
+    "monthly_available_income_after_rent_eur": "monthly_available_income_eur - monthly_rent_eur",
+    "monthly_income_units_to_cover_annual_rent": "annual_rent_eur / monthly_available_income_eur"
+  },
+  "best_three_by_rent_share": [
+    {
+      "municipality_code": "20059",
+      "municipality_name": "Oñati",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "581.48",
+      "rent_as_share_of_available_income_percent": "26.77061193170918856704392863993862",
+      "monthly_available_income_after_rent_eur": "1590.603333333333333333333333333333",
+      "available_income_annual_eur": "26065.00",
+      "population": 11494
+    },
+    {
+      "municipality_code": "20056",
+      "municipality_name": "Mutriku",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "517.93",
+      "rent_as_share_of_available_income_percent": "28.73265221210300032360963432111322",
+      "monthly_available_income_after_rent_eur": "1284.653333333333333333333333333333",
+      "available_income_annual_eur": "21631.00",
+      "population": 5357
+    },
+    {
+      "municipality_code": "20013",
+      "municipality_name": "Aretxabaleta",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "590.26",
+      "rent_as_share_of_available_income_percent": "28.93076828819997549319936282318343",
+      "monthly_available_income_after_rent_eur": "1449.99",
+      "available_income_annual_eur": "24483.00",
+      "population": 7165
+    }
+  ],
+  "median_municipality_by_rent_share": {
+    "municipality_code": "48090",
+    "municipality_name": "Balmaseda",
+    "territory_name": "Bizkaia",
+    "monthly_rent_eur": "562.68",
+    "rent_as_share_of_available_income_percent": "37.54746149140855252182616915976201",
+    "monthly_available_income_after_rent_eur": "935.903333333333333333333333333333",
+    "available_income_annual_eur": "17983.00",
+    "population": 7663
+  },
+  "worst_three_by_rent_share": [
+    {
+      "municipality_code": "48902",
+      "municipality_name": "Erandio",
+      "territory_name": "Bizkaia",
+      "monthly_rent_eur": "739.97",
+      "rent_as_share_of_available_income_percent": "48.98841443230718305196954650777888",
+      "monthly_available_income_after_rent_eur": "770.53",
+      "available_income_annual_eur": "18126.00",
+      "population": 23958
+    },
+    {
+      "municipality_code": "20069",
+      "municipality_name": "Donostia / San Sebastián",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "1035.11",
+      "rent_as_share_of_available_income_percent": "49.12330934113738827809855255872814",
+      "monthly_available_income_after_rent_eur": "1072.056666666666666666666666666667",
+      "available_income_annual_eur": "25286.00",
+      "population": 182641
+    },
+    {
+      "municipality_code": "20064",
+      "municipality_name": "Pasaia",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "772.17",
+      "rent_as_share_of_available_income_percent": "50.48237537455734132388994824298557",
+      "monthly_available_income_after_rent_eur": "757.413333333333333333333333333333",
+      "available_income_annual_eur": "18355.00",
+      "population": 16658
+    }
+  ],
+  "three_lowest_rents": [
+    {
+      "municipality_code": "01051",
+      "municipality_name": "Salvatierra/Agurain",
+      "territory_name": "Araba/Álava",
+      "monthly_rent_eur": "509.05",
+      "rent_as_share_of_available_income_percent": "32.57572525597269624573378839590443",
+      "monthly_available_income_after_rent_eur": "1053.616666666666666666666666666667",
+      "available_income_annual_eur": "18752.00",
+      "population": 5254
+    },
+    {
+      "municipality_code": "20056",
+      "municipality_name": "Mutriku",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "517.93",
+      "rent_as_share_of_available_income_percent": "28.73265221210300032360963432111322",
+      "monthly_available_income_after_rent_eur": "1284.653333333333333333333333333333",
+      "available_income_annual_eur": "21631.00",
+      "population": 5357
+    },
+    {
+      "municipality_code": "48060",
+      "municipality_name": "Markina-Xemein",
+      "territory_name": "Bizkaia",
+      "monthly_rent_eur": "531.76",
+      "rent_as_share_of_available_income_percent": "29.20688392530208714756499450750640",
+      "monthly_available_income_after_rent_eur": "1288.906666666666666666666666666667",
+      "available_income_annual_eur": "21848.00",
+      "population": 5015
+    }
+  ],
+  "three_highest_monthly_amounts_after_rent": [
+    {
+      "municipality_code": "20059",
+      "municipality_name": "Oñati",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "581.48",
+      "rent_as_share_of_available_income_percent": "26.77061193170918856704392863993862",
+      "monthly_available_income_after_rent_eur": "1590.603333333333333333333333333333",
+      "available_income_annual_eur": "26065.00",
+      "population": 11494
+    },
+    {
+      "municipality_code": "20013",
+      "municipality_name": "Aretxabaleta",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "590.26",
+      "rent_as_share_of_available_income_percent": "28.93076828819997549319936282318343",
+      "monthly_available_income_after_rent_eur": "1449.99",
+      "available_income_annual_eur": "24483.00",
+      "population": 7165
+    },
+    {
+      "municipality_code": "20074",
+      "municipality_name": "Bergara",
+      "territory_name": "Gipuzkoa",
+      "monthly_rent_eur": "599.03",
+      "rent_as_share_of_available_income_percent": "29.68556679743960355151765434647945",
+      "monthly_available_income_after_rent_eur": "1418.886666666666666666666666666667",
+      "available_income_annual_eur": "24215.00",
+      "population": 14739
+    }
+  ],
+  "outputs": [
+    "resultados\\indicadores\\indicadores_municipales_2023.csv",
+    "resultados\\indicadores\\resumen_emancipacion_2023.json"
+  ],
+  "timestamp_utc": "2026-11-16T15:21:50.016399+00:00"
+}

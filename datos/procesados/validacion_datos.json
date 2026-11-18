@@ -1,0 +1,260 @@
+{
+  "status": "passed",
+  "source_metadata": {
+    "rent": {
+      "url": "https://opendata.euskadi.eus/contenidos/estadistica/122417_emal_tablas_estad/opendata/EMAL.-Barrios-Municipios.-2016-2026_es.xlsx",
+      "downloaded_at_utc": "2026-11-13T18:50:06.822048+00:00",
+      "http_status": 200,
+      "content_length": 256980,
+      "sha256": "f4d27d4e8e9bd3688d4e7a454026a4a0884073dc73e3fc1c0da4891a1ad1af5c"
+    },
+    "income": {
+      "url": "https://opendata.euskadi.eus/contenidos/estadistica/udalmap_indicador_61/es_def/adjuntos/indicator.csv",
+      "downloaded_at_utc": "2026-11-13T18:50:07.296187+00:00",
+      "http_status": 200,
+      "content_length": 49544,
+      "sha256": "4463da1bb6364e542b3ac8aee4e6abc93cc23bbaa7b1b4eb4b18f4a4588684b0"
+    },
+    "population": {
+      "url": "https://opendata.euskadi.eus/contenidos/estadistica/udalmap_indicador_162/es_def/adjuntos/indicator.csv",
+      "downloaded_at_utc": "2026-11-13T18:50:07.769144+00:00",
+      "http_status": 200,
+      "content_length": 64812,
+      "sha256": "56c1b72d6b867d94aa151a60d8ebe3f91c9d8faf75dd9c2153e4e930bbe15728"
+    }
+  },
+  "source_files": {
+    "rent": "emal_alquiler_municipios_2016-2026T1.xlsx",
+    "income": "udalmap_renta_personal_disponible.csv",
+    "population": "udalmap_poblacion_total.csv"
+  },
+  "datasets": {
+    "rent": {
+      "records": 740,
+      "municipalities": 73,
+      "year_min": 2016,
+      "year_max": 2025,
+      "duplicate_keys": 0,
+      "records_missing_required_fields": 0,
+      "null_metrics": {
+        "deposit_count": 2,
+        "monthly_rent_eur": 18,
+        "rent_per_m2_eur": 18
+      },
+      "null_metric_examples": {
+        "deposit_count": [
+          {
+            "municipality_code": "48036",
+            "municipality_name": "Galdakao",
+            "year": 2024
+          },
+          {
+            "municipality_code": "48036",
+            "municipality_name": "Galdakao",
+            "year": 2025
+          }
+        ],
+        "monthly_rent_eur": [
+          {
+            "municipality_code": "01051",
+            "municipality_name": "Agurain/Salvatierra",
+            "year": 2025
+          },
+          {
+            "municipality_code": "20051",
+            "municipality_name": "Legazpi",
+            "year": 2016
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2016
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2018
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2021
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2024
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2025
+          },
+          {
+            "municipality_code": "20077",
+            "municipality_name": "Urretxu",
+            "year": 2016
+          },
+          {
+            "municipality_code": "48001",
+            "municipality_name": "Abadiño",
+            "year": 2025
+          },
+          {
+            "municipality_code": "48002",
+            "municipality_name": "Abanto y Ciervana-Abanto Zierbena",
+            "year": 2016
+          }
+        ],
+        "rent_per_m2_eur": [
+          {
+            "municipality_code": "01051",
+            "municipality_name": "Agurain/Salvatierra",
+            "year": 2025
+          },
+          {
+            "municipality_code": "20051",
+            "municipality_name": "Legazpi",
+            "year": 2016
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2016
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2018
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2021
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2024
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "year": 2025
+          },
+          {
+            "municipality_code": "20077",
+            "municipality_name": "Urretxu",
+            "year": 2016
+          },
+          {
+            "municipality_code": "48001",
+            "municipality_name": "Abadiño",
+            "year": 2025
+          },
+          {
+            "municipality_code": "48002",
+            "municipality_name": "Abanto y Ciervana-Abanto Zierbena",
+            "year": 2016
+          }
+        ]
+      }
+    },
+    "income": {
+      "records": 4032,
+      "municipalities": 252,
+      "year_min": 2001,
+      "year_max": 2023,
+      "duplicate_keys": 0,
+      "records_missing_required_fields": 0,
+      "null_metrics": {
+        "available_income_eur": 1
+      },
+      "null_metric_examples": {
+        "available_income_eur": [
+          {
+            "municipality_code": "48916",
+            "municipality_name": "Usansolo",
+            "year": 2023
+          }
+        ]
+      }
+    },
+    "population": {
+      "records": 6300,
+      "municipalities": 252,
+      "year_min": 2001,
+      "year_max": 2025,
+      "duplicate_keys": 0,
+      "records_missing_required_fields": 0,
+      "null_metrics": {
+        "population": 2
+      },
+      "null_metric_examples": {
+        "population": [
+          {
+            "municipality_code": "48916",
+            "municipality_name": "Usansolo",
+            "year": 2024
+          },
+          {
+            "municipality_code": "48916",
+            "municipality_name": "Usansolo",
+            "year": 2023
+          }
+        ]
+      }
+    }
+  },
+  "emal_table_structure": {
+    "source_sheets": {
+      "T2.1": 740,
+      "T2.2": 740,
+      "T2.3": 740
+    },
+    "sheet_key_mismatches": {}
+  },
+  "municipal_code_coverage": {
+    "current_emal_municipalities": 73,
+    "income_municipalities": 252,
+    "population_municipalities": 252,
+    "emal_codes_without_income": [],
+    "emal_codes_without_population": [],
+    "income_codes_without_emal_count": 179,
+    "income_codes_without_emal_sample": [
+      "01001",
+      "01003",
+      "01004",
+      "01006",
+      "01008",
+      "01009",
+      "01010",
+      "01011",
+      "01013",
+      "01014"
+    ]
+  },
+  "latest_common_year_with_rent_income_and_population": 2023,
+  "complete_comparison_municipalities_in_latest_common_year": 73,
+  "comparison_codes_missing_from_latest_common_year": [],
+  "galdakao_geographies": {
+    "retained": [
+      "Current Galdakao excluding Usansolo",
+      "Historical Galdakao including Usansolo"
+    ],
+    "historical_variant_in_current_boundary_comparison": false
+  },
+  "transformations": [
+    "Municipal codes normalized to five-character text.",
+    "Udalmap CSV parsed as semicolon-delimited cp1252 with Spanish decimal notation.",
+    "EMAL annual sheets T2.1, T2.2, and T2.3 joined by municipality, geography variant, and year.",
+    "Missing metric values preserved as empty fields; no imputation or geographic allocation.",
+    "Historical Galdakao including Usansolo retained but excluded from current-boundary comparisons."
+  ],
+  "limitations": [
+    "Udalmap available personal income is a mean for residents aged 18+; it is not a youth wage or an individual salary.",
+    "EMAL values are identified by contract start year; historical values may be updated using IRAV and may be provisional.",
+    "The 2023 comparison aligns the published year labels, but does not make the measures equivalent to a contemporaneous net wage and rent.",
+    "Rental coverage is limited to EMAL-published municipalities; no values are distributed to municipalities without rental data."
+  ]
+}

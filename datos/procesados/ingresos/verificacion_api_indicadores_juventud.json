@@ -1,0 +1,58 @@
+{
+  "status": "verified",
+  "source": "Observatorio Vasco de la Juventud",
+  "verification_method": "Public JSON endpoint used by the official indicator portal",
+  "indicators": {
+    "31": {
+      "file": "datos\\originales\\juventud\\indicador_31_salario_portal_ovj.json",
+      "sha256": "39c02bfb74ec31e2f636b18670de4bb673d07c9c7f7feff305b43820c8e623a7",
+      "http_status": 200,
+      "cached": true,
+      "verified_values": {
+        "2024": {
+          "Total": "1564",
+          "Hombres": "1617",
+          "Mujeres": "1438",
+          "Álava": "1487",
+          "Bizkaia": "1585",
+          "Gipuzkoa": "1555",
+          "18-29 años": "1381",
+          "30-34 años": "1774"
+        }
+      }
+    },
+    "32": {
+      "file": "datos\\originales\\juventud\\indicador_32_renta_personal_portal_ovj.json",
+      "sha256": "00938f6d6b243c8e8d055f092d111758485fa102c52f7fc58abb63b9684f9f5b",
+      "http_status": 200,
+      "cached": true,
+      "verified_values": {
+        "2023": {
+          "Total": "17930",
+          "Hombres": "19076",
+          "Mujeres": "16734"
+        }
+      }
+    },
+    "49": {
+      "file": "datos\\originales\\juventud\\indicador_49_acceso_alquiler_portal_ovj.json",
+      "sha256": "6e2387ee24370db76c99272097edf1a8edd9f4e4c2963dc29931246a410caa4d",
+      "http_status": 200,
+      "cached": true,
+      "verified_values": {
+        "2024": {
+          "Total": "52.4",
+          "Hombres": "50.7",
+          "Mujeres": "57",
+          "18-24 años": "69.4",
+          "25-29 años": "53.5",
+          "30-34 años": "46.2",
+          "Álava": "50.2",
+          "Bizkaia": "51.4",
+          "Gipuzkoa": "54.9"
+        }
+      }
+    }
+  },
+  "timestamp_utc": "2026-11-13T20:22:18.767980+00:00"
+}

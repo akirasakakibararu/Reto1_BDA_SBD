@@ -1,0 +1,14 @@
+{
+  "source": "Observatorio Vasco de la Juventud",
+  "dataset": "Indicadores de Juventud 2025",
+  "description": "Indicadores 31 (salario neto juvenil), 32 (renta personal juvenil) y 49 (coste de acceso al alquiler)",
+  "url": "https://www.gazteaukera.euskadi.eus/contenidos/noticia/txostena_panorama_2025/es_def/adjuntos/Indicadores-de-Juventud-2025.pdf",
+  "downloaded_at_utc": "2026-11-13T20:00:59.189677+00:00",
+  "http_status": 200,
+  "content_type": "application/pdf",
+  "content_length": 5261180,
+  "etag": null,
+  "last_modified": "Wed, 04 Mar 2026 10:04:02 GMT",
+  "sha256": "cec0c7db980ee01708f795f63110fc03ce3df52b22516c9a795cb1ce2d7501e7",
+  "file": "datos\\originales\\juventud\\indicadores_de_juventud_2025.pdf"
+}

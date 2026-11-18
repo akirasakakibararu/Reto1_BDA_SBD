@@ -1,0 +1,206 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "query": {
+    "year": 2023,
+    "geography.included_in_current_boundary_comparison": true,
+    "rental.monthly_eur": {
+      "$lt": "600"
+    }
+  },
+  "index_created": "ix_alquiler_anio_geografia_renta",
+  "natural_scan": {
+    "hint": {
+      "$natural": 1
+    },
+    "winning_plan_stages": [
+      "COLLSCAN"
+    ],
+    "total_docs_examined": 740,
+    "total_keys_examined": 0,
+    "n_returned": 22,
+    "winning_plan": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "$and": [
+          {
+            "geography.included_in_current_boundary_comparison": {
+              "$eq": true
+            }
+          },
+          {
+            "year": {
+              "$eq": 2023
+            }
+          },
+          {
+            "rental.monthly_eur": {
+              "$lt": "600"
+            }
+          }
+        ]
+      },
+      "nss": "reto_vivienda.alquileres",
+      "direction": "forward"
+    }
+  },
+  "with_index": {
+    "hint": "ix_alquiler_anio_geografia_renta",
+    "winning_plan_stages": [
+      "FETCH",
+      "IXSCAN"
+    ],
+    "total_docs_examined": 22,
+    "total_keys_examined": 22,
+    "n_returned": 22,
+    "winning_plan": {
+      "isCached": false,
+      "stage": "FETCH",
+      "nss": "reto_vivienda.alquileres",
+      "inputStage": {
+        "stage": "IXSCAN",
+        "nss": "reto_vivienda.alquileres",
+        "keyPattern": {
+          "year": 1,
+          "geography.included_in_current_boundary_comparison": 1,
+          "rental.monthly_eur": 1
+        },
+        "indexName": "ix_alquiler_anio_geografia_renta",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "year": [],
+          "geography.included_in_current_boundary_comparison": [],
+          "rental.monthly_eur": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "year": [
+            "[2023, 2023]"
+          ],
+          "geography.included_in_current_boundary_comparison": [
+            "[true, true]"
+          ],
+          "rental.monthly_eur": [
+            "[-inf, 600)"
+          ]
+        }
+      }
+    }
+  },
+  "index_information": {
+    "alquileres": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_alquiler_municipio_geografia_anio": {
+        "v": 2,
+        "key": [
+          [
+            "municipality_code",
+            1
+          ],
+          [
+            "geography.variant",
+            1
+          ],
+          [
+            "year",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "ix_alquiler_anio_geografia_renta": {
+        "v": 2,
+        "key": [
+          [
+            "year",
+            1
+          ],
+          [
+            "geography.included_in_current_boundary_comparison",
+            1
+          ],
+          [
+            "rental.monthly_eur",
+            1
+          ]
+        ]
+      }
+    },
+    "socioeconomicos": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_socioeconomico_municipio_anio": {
+        "v": 2,
+        "key": [
+          [
+            "municipality_code",
+            1
+          ],
+          [
+            "year",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "ix_socio_anio_renta_disponible": {
+        "v": 2,
+        "key": [
+          [
+            "year",
+            1
+          ],
+          [
+            "indicators.available_income_eur",
+            -1
+          ]
+        ]
+      }
+    },
+    "municipios": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "ix_municipios_territorio_nombre": {
+        "v": 2,
+        "key": [
+          [
+            "territory.code",
+            1
+          ],
+          [
+            "municipality_name",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "timestamp_utc": "2026-11-13T19:22:00.905880+00:00"
+}

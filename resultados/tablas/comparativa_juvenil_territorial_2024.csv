@@ -1,0 +1,4 @@
+territory_code,territory_name,year,municipality_count,total_deposits,weighted_monthly_rent_eur,net_monthly_youth_salary_eur,calculated_rent_share_percent,observatorio_rent_share_percent,difference_percentage_points
+01,Araba/Álava,2024,4,2512,764.58,1487.00,51.42,50.20,1.22
+20,Gipuzkoa,2024,33,6357,868.93,1555.00,55.88,54.90,0.98
+48,Bizkaia,2024,35,8210,828.49,1585.00,52.27,51.40,0.87

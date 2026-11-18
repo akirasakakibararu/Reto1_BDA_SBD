@@ -1,0 +1,661 @@
+{
+  "alquiler_de_donostia_2023": {
+    "collection": "alquileres",
+    "filter": {
+      "municipality_code": "20069",
+      "year": 2023,
+      "geography.included_in_current_boundary_comparison": true
+    },
+    "projection": {
+      "_id": 0,
+      "municipality_code": 1,
+      "municipality_name": 1,
+      "year": 1,
+      "rental": 1,
+      "reference": 1
+    },
+    "sort": [],
+    "result_count": 1,
+    "results": [
+      {
+        "municipality_code": "20069",
+        "municipality_name": "Donostia / San Sebastian",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "1035.11",
+          "per_m2_eur": "13.8096",
+          "deposit_count": 2237,
+          "annual_eur": "12421.32"
+        },
+        "reference": {
+          "rent_reference": "EMAL contract start year",
+          "historical_adjustment_note": "Historical rents may be updated using IRAV; published figures may be provisional."
+        }
+      }
+    ]
+  },
+  "alquiler_mensual_inferior_a_600_euros_2023": {
+    "collection": "alquileres",
+    "filter": {
+      "year": 2023,
+      "geography.included_in_current_boundary_comparison": true,
+      "rental.monthly_eur": {
+        "$lt": "600"
+      }
+    },
+    "projection": {
+      "_id": 0,
+      "municipality_code": 1,
+      "municipality_name": 1,
+      "year": 1,
+      "rental.monthly_eur": 1
+    },
+    "sort": [
+      [
+        "rental.monthly_eur",
+        1
+      ]
+    ],
+    "result_count": 20,
+    "results": [
+      {
+        "municipality_code": "01051",
+        "municipality_name": "Agurain/Salvatierra",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "509.05"
+        }
+      },
+      {
+        "municipality_code": "20056",
+        "municipality_name": "Mutriku",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "517.93"
+        }
+      },
+      {
+        "municipality_code": "48060",
+        "municipality_name": "Markina-Xemein",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "531.76"
+        }
+      },
+      {
+        "municipality_code": "48073",
+        "municipality_name": "Ondarroa",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "551.06"
+        }
+      },
+      {
+        "municipality_code": "20051",
+        "municipality_name": "Legazpi",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "551.08"
+        }
+      },
+      {
+        "municipality_code": "48017",
+        "municipality_name": "Bermeo",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "552.67"
+        }
+      },
+      {
+        "municipality_code": "48090",
+        "municipality_name": "Balmaseda",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "562.68"
+        }
+      },
+      {
+        "municipality_code": "20077",
+        "municipality_name": "Urretxu",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "562.74"
+        }
+      },
+      {
+        "municipality_code": "20080",
+        "municipality_name": "Zumarraga",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "568.77"
+        }
+      },
+      {
+        "municipality_code": "20032",
+        "municipality_name": "Elgoibar",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "570.23"
+        }
+      },
+      {
+        "municipality_code": "20017",
+        "municipality_name": "Azkoitia",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "574.1"
+        }
+      },
+      {
+        "municipality_code": "01002",
+        "municipality_name": "Amurrio",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "574.29"
+        }
+      },
+      {
+        "municipality_code": "48057",
+        "municipality_name": "Lekeitio",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "576.93"
+        }
+      },
+      {
+        "municipality_code": "20059",
+        "municipality_name": "Oñati",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "581.48"
+        }
+      },
+      {
+        "municipality_code": "48034",
+        "municipality_name": "Ermua",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "583.39"
+        }
+      },
+      {
+        "municipality_code": "20013",
+        "municipality_name": "Aretxabaleta",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "590.26"
+        }
+      },
+      {
+        "municipality_code": "48045",
+        "municipality_name": "Gueñes",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "591.96"
+        }
+      },
+      {
+        "municipality_code": "01036",
+        "municipality_name": "Laudio/Llodio",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "592.52"
+        }
+      },
+      {
+        "municipality_code": "20049",
+        "municipality_name": "Lazkao",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "596.05"
+        }
+      },
+      {
+        "municipality_code": "20018",
+        "municipality_name": "Azpeitia",
+        "year": 2023,
+        "rental": {
+          "monthly_eur": "598.87"
+        }
+      }
+    ]
+  },
+  "municipios_mayores_de_10000_con_renta_positiva_2023": {
+    "collection": "socioeconomicos",
+    "filter": {
+      "$and": [
+        {
+          "year": 2023
+        },
+        {
+          "indicators.population": {
+            "$gte": 10000
+          }
+        },
+        {
+          "indicators.available_income_eur": {
+            "$gt": "0"
+          }
+        }
+      ]
+    },
+    "projection": {
+      "_id": 0,
+      "municipality_code": 1,
+      "municipality_name": 1,
+      "year": 1,
+      "indicators.population": 1,
+      "indicators.available_income_eur": 1
+    },
+    "sort": [
+      [
+        "indicators.available_income_eur",
+        -1
+      ]
+    ],
+    "result_count": 10,
+    "results": [
+      {
+        "municipality_code": "48044",
+        "municipality_name": "Getxo",
+        "year": 2023,
+        "indicators": {
+          "population": 75430,
+          "available_income_eur": "28218.00"
+        }
+      },
+      {
+        "municipality_code": "20059",
+        "municipality_name": "Oñati",
+        "year": 2023,
+        "indicators": {
+          "population": 11494,
+          "available_income_eur": "26065.00"
+        }
+      },
+      {
+        "municipality_code": "20069",
+        "municipality_name": "Donostia / San Sebastián",
+        "year": 2023,
+        "indicators": {
+          "population": 182641,
+          "available_income_eur": "25286.00"
+        }
+      },
+      {
+        "municipality_code": "48085",
+        "municipality_name": "Sopela",
+        "year": 2023,
+        "indicators": {
+          "population": 13850,
+          "available_income_eur": "25017.00"
+        }
+      },
+      {
+        "municipality_code": "20036",
+        "municipality_name": "Hondarribia",
+        "year": 2023,
+        "indicators": {
+          "population": 17029,
+          "available_income_eur": "24901.00"
+        }
+      },
+      {
+        "municipality_code": "20081",
+        "municipality_name": "Zumaia",
+        "year": 2023,
+        "indicators": {
+          "population": 10054,
+          "available_income_eur": "24530.00"
+        }
+      },
+      {
+        "municipality_code": "48069",
+        "municipality_name": "Mungia",
+        "year": 2023,
+        "indicators": {
+          "population": 17515,
+          "available_income_eur": "24453.00"
+        }
+      },
+      {
+        "municipality_code": "20079",
+        "municipality_name": "Zarautz",
+        "year": 2023,
+        "indicators": {
+          "population": 23118,
+          "available_income_eur": "24369.00"
+        }
+      },
+      {
+        "municipality_code": "20074",
+        "municipality_name": "Bergara",
+        "year": 2023,
+        "indicators": {
+          "population": 14739,
+          "available_income_eur": "24215.00"
+        }
+      },
+      {
+        "municipality_code": "48027",
+        "municipality_name": "Durango",
+        "year": 2023,
+        "indicators": {
+          "population": 29787,
+          "available_income_eur": "23568.00"
+        }
+      }
+    ]
+  },
+  "alquiler_2023_con_procedencia_de_la_hoja_T2_2": {
+    "collection": "alquileres",
+    "filter": {
+      "year": 2023,
+      "geography.included_in_current_boundary_comparison": true,
+      "source.sheets": "T2.2"
+    },
+    "projection": {
+      "_id": 0,
+      "municipality_code": 1,
+      "municipality_name": 1,
+      "year": 1,
+      "geography.variant": 1,
+      "rental.monthly_eur": 1,
+      "source.sheets": 1
+    },
+    "sort": [
+      [
+        "rental.monthly_eur",
+        1
+      ]
+    ],
+    "result_count": 10,
+    "results": [
+      {
+        "municipality_code": "01051",
+        "municipality_name": "Agurain/Salvatierra",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "509.05"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "20056",
+        "municipality_name": "Mutriku",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "517.93"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "48060",
+        "municipality_name": "Markina-Xemein",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "531.76"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "48073",
+        "municipality_name": "Ondarroa",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "551.06"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "20051",
+        "municipality_name": "Legazpi",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "551.08"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "48017",
+        "municipality_name": "Bermeo",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "552.67"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "48090",
+        "municipality_name": "Balmaseda",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "562.68"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "20077",
+        "municipality_name": "Urretxu",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "562.74"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "20080",
+        "municipality_name": "Zumarraga",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "568.77"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      },
+      {
+        "municipality_code": "20032",
+        "municipality_name": "Elgoibar",
+        "year": 2023,
+        "geography": {
+          "variant": "municipality"
+        },
+        "rental": {
+          "monthly_eur": "570.23"
+        },
+        "source": {
+          "sheets": [
+            "T2.1",
+            "T2.2",
+            "T2.3"
+          ]
+        }
+      }
+    ]
+  },
+  "diez_municipios_con_mayor_renta_disponible_2023": {
+    "collection": "socioeconomicos",
+    "filter": {
+      "year": 2023,
+      "indicators.available_income_eur": {
+        "$gt": "0"
+      }
+    },
+    "projection": {
+      "_id": 0,
+      "municipality_code": 1,
+      "municipality_name": 1,
+      "year": 1,
+      "indicators.available_income_eur": 1
+    },
+    "sort": [
+      [
+        "indicators.available_income_eur",
+        -1
+      ]
+    ],
+    "result_count": 10,
+    "results": [
+      {
+        "municipality_code": "48039",
+        "municipality_name": "Garai",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "31273.00"
+        }
+      },
+      {
+        "municipality_code": "48053",
+        "municipality_name": "Laukiz",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "30619.00"
+        }
+      },
+      {
+        "municipality_code": "48061",
+        "municipality_name": "Maruri-Jatabe",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "28880.00"
+        }
+      },
+      {
+        "municipality_code": "48044",
+        "municipality_name": "Getxo",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "28218.00"
+        }
+      },
+      {
+        "municipality_code": "20905",
+        "municipality_name": "Orendain",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "28091.00"
+        }
+      },
+      {
+        "municipality_code": "20037",
+        "municipality_name": "Gaintza",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "27054.00"
+        }
+      },
+      {
+        "municipality_code": "48903",
+        "municipality_name": "Loiu",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "26765.00"
+        }
+      },
+      {
+        "municipality_code": "20012",
+        "municipality_name": "Arama",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "26698.00"
+        }
+      },
+      {
+        "municipality_code": "20062",
+        "municipality_name": "Ormaiztegi",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "26659.00"
+        }
+      },
+      {
+        "municipality_code": "01008",
+        "municipality_name": "Arratzua-Ubarrundia",
+        "year": 2023,
+        "indicators": {
+          "available_income_eur": "26427.00"
+        }
+      }
+    ]
+  }
+}

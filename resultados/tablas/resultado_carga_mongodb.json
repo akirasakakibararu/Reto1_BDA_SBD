@@ -1,0 +1,76 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "mongodb_server_version": "9.0.4",
+  "batch_id": "ff84b9a70503e1792ce020986d42715dc9e8e1fdcc3c584278b73babde690ccf",
+  "verified_source_sha256": {
+    "rent": "f4d27d4e8e9bd3688d4e7a454026a4a0884073dc73e3fc1c0da4891a1ad1af5c",
+    "income": "4463da1bb6364e542b3ac8aee4e6abc93cc23bbaa7b1b4eb4b18f4a4588684b0",
+    "population": "56c1b72d6b867d94aa151a60d8ebe3f91c9d8faf75dd9c2153e4e930bbe15728"
+  },
+  "documents_expected": {
+    "municipios": 252,
+    "alquileres": 740,
+    "socioeconomicos": 6300
+  },
+  "documents_by_collection": {
+    "municipios": 252,
+    "alquileres": 740,
+    "socioeconomicos": 6300
+  },
+  "bulk_write": {
+    "municipios": {
+      "upserted": 0,
+      "modified": 0,
+      "matched": 252
+    },
+    "alquileres": {
+      "upserted": 0,
+      "modified": 740,
+      "matched": 740
+    },
+    "socioeconomicos": {
+      "upserted": 0,
+      "modified": 6300,
+      "matched": 6300
+    }
+  },
+  "cleaning_and_transformation": {
+    "null_and_absent_values": {
+      "alquileres_matched": 740,
+      "alquileres_modified": 0,
+      "socioeconomicos_matched": 6300,
+      "socioeconomicos_modified": 2268
+    },
+    "bson_type_corrections": {
+      "alquileres_matched": 740,
+      "alquileres_modified": 0,
+      "socioeconomicos_matched": 6300,
+      "socioeconomicos_modified": 6298
+    },
+    "duplicate_groups": {
+      "alquileres": 0,
+      "socioeconomicos": 0
+    },
+    "derived_fields": {
+      "rental.annual_eur": {
+        "matched": 740,
+        "modified": 740,
+        "missing_after_transform": 0,
+        "operation": "$multiply monthly rent by 12"
+      },
+      "indicators.available_income_monthly_eur": {
+        "matched": 6300,
+        "modified": 6300,
+        "missing_after_transform": 0,
+        "operation": "$divide annual available income by 12"
+      }
+    }
+  },
+  "previous_source_documents_pruned": {
+    "municipios": 0,
+    "alquileres": 0,
+    "socioeconomicos": 0
+  },
+  "timestamp_utc": "2026-11-16T15:21:47.423556+00:00"
+}

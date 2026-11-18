@@ -1,0 +1,3568 @@
+{
+  "municipios_ordenados_por_esfuerzo_de_alquiler_2023": {
+    "collection": "alquileres",
+    "pipeline": [
+      {
+        "$match": {
+          "year": 2023,
+          "geography.included_in_current_boundary_comparison": true,
+          "rental.monthly_eur": {
+            "$gt": "0"
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "socioeconomicos",
+          "let": {
+            "code": "$municipality_code",
+            "year": "$year"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "$expr": {
+                  "$and": [
+                    {
+                      "$eq": [
+                        "$municipality_code",
+                        "$$code"
+                      ]
+                    },
+                    {
+                      "$eq": [
+                        "$year",
+                        "$$year"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "indicators.available_income_eur": 1,
+                "indicators.population": 1
+              }
+            }
+          ],
+          "as": "socioeconomic"
+        }
+      },
+      {
+        "$unwind": "$socioeconomic"
+      },
+      {
+        "$match": {
+          "socioeconomic.indicators.available_income_eur": {
+            "$gt": "0"
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "municipios",
+          "localField": "municipality_code",
+          "foreignField": "_id",
+          "as": "municipality"
+        }
+      },
+      {
+        "$unwind": "$municipality"
+      },
+      {
+        "$addFields": {
+          "indicators.monthly_available_income_eur": {
+            "$divide": [
+              "$socioeconomic.indicators.available_income_eur",
+              "12"
+            ]
+          },
+          "indicators.rent_as_share_of_available_income_percent": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$rental.monthly_eur",
+                  {
+                    "$divide": [
+                      "$socioeconomic.indicators.available_income_eur",
+                      "12"
+                    ]
+                  }
+                ]
+              },
+              "100"
+            ]
+          },
+          "indicators.monthly_remaining_after_rent_eur": {
+            "$subtract": [
+              {
+                "$divide": [
+                  "$socioeconomic.indicators.available_income_eur",
+                  "12"
+                ]
+              },
+              "$rental.monthly_eur"
+            ]
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "municipality_code": 1,
+          "municipality_name": "$municipality.municipality_name",
+          "territory_name": "$municipality.territory.name",
+          "year": 1,
+          "population": "$socioeconomic.indicators.population",
+          "monthly_rent_eur": "$rental.monthly_eur",
+          "rent_per_m2_eur": "$rental.per_m2_eur",
+          "deposit_count": "$rental.deposit_count",
+          "available_income_annual_eur": "$socioeconomic.indicators.available_income_eur",
+          "monthly_available_income_eur": "$indicators.monthly_available_income_eur",
+          "rent_as_share_of_available_income_percent": "$indicators.rent_as_share_of_available_income_percent",
+          "monthly_remaining_after_rent_eur": "$indicators.monthly_remaining_after_rent_eur",
+          "income_measure": {
+            "$literal": "Adult mean available personal income, not a youth wage"
+          }
+        }
+      },
+      {
+        "$sort": {
+          "rent_as_share_of_available_income_percent": 1
+        }
+      }
+    ],
+    "result_count": 73,
+    "results": [
+      {
+        "municipality_code": "20059",
+        "year": 2023,
+        "municipality_name": "Oñati",
+        "territory_name": "Gipuzkoa",
+        "population": 11494,
+        "monthly_rent_eur": "581.48",
+        "rent_per_m2_eur": "6.41922",
+        "deposit_count": 64,
+        "available_income_annual_eur": "26065.00",
+        "monthly_available_income_eur": "2172.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "26.77061193170918856704392863993862",
+        "monthly_remaining_after_rent_eur": "1590.603333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20056",
+        "year": 2023,
+        "municipality_name": "Mutriku",
+        "territory_name": "Gipuzkoa",
+        "population": 5357,
+        "monthly_rent_eur": "517.93",
+        "rent_per_m2_eur": "6.733",
+        "deposit_count": 30,
+        "available_income_annual_eur": "21631.00",
+        "monthly_available_income_eur": "1802.583333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "28.73265221210300032360963432111322",
+        "monthly_remaining_after_rent_eur": "1284.653333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20013",
+        "year": 2023,
+        "municipality_name": "Aretxabaleta",
+        "territory_name": "Gipuzkoa",
+        "population": 7165,
+        "monthly_rent_eur": "590.26",
+        "rent_per_m2_eur": "7.15947",
+        "deposit_count": 39,
+        "available_income_annual_eur": "24483.00",
+        "monthly_available_income_eur": "2040.25",
+        "rent_as_share_of_available_income_percent": "28.93076828819997549319936282318343",
+        "monthly_remaining_after_rent_eur": "1449.99",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48060",
+        "year": 2023,
+        "municipality_name": "Markina-Xemein",
+        "territory_name": "Bizkaia",
+        "population": 5015,
+        "monthly_rent_eur": "531.76",
+        "rent_per_m2_eur": "7.03304",
+        "deposit_count": 37,
+        "available_income_annual_eur": "21848.00",
+        "monthly_available_income_eur": "1820.666666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "29.20688392530208714756499450750640",
+        "monthly_remaining_after_rent_eur": "1288.906666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20032",
+        "year": 2023,
+        "municipality_name": "Elgoibar",
+        "territory_name": "Gipuzkoa",
+        "population": 11415,
+        "monthly_rent_eur": "570.23",
+        "rent_per_m2_eur": "7.48036",
+        "deposit_count": 139,
+        "available_income_annual_eur": "23366.00",
+        "monthly_available_income_eur": "1947.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "29.28511512453992981254814688008217",
+        "monthly_remaining_after_rent_eur": "1376.936666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20017",
+        "year": 2023,
+        "municipality_name": "Azkoitia",
+        "territory_name": "Gipuzkoa",
+        "population": 11936,
+        "monthly_rent_eur": "574.1",
+        "rent_per_m2_eur": "6.43422",
+        "deposit_count": 92,
+        "available_income_annual_eur": "23406.00",
+        "monthly_available_income_eur": "1950.50",
+        "rent_as_share_of_available_income_percent": "29.43347859523199179697513458087670",
+        "monthly_remaining_after_rent_eur": "1376.40",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20051",
+        "year": 2023,
+        "municipality_name": "Legazpi",
+        "territory_name": "Gipuzkoa",
+        "population": 8290,
+        "monthly_rent_eur": "551.08",
+        "rent_per_m2_eur": "6.59238",
+        "deposit_count": 54,
+        "available_income_annual_eur": "22358.00",
+        "monthly_available_income_eur": "1863.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "29.57760085875301905358261025136416",
+        "monthly_remaining_after_rent_eur": "1312.086666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20077",
+        "year": 2023,
+        "municipality_name": "Urretxu",
+        "territory_name": "Gipuzkoa",
+        "population": 6798,
+        "monthly_rent_eur": "562.74",
+        "rent_per_m2_eur": "7.17356",
+        "deposit_count": 46,
+        "available_income_annual_eur": "22791.00",
+        "monthly_available_income_eur": "1899.25",
+        "rent_as_share_of_available_income_percent": "29.62959062787942608924575490325128",
+        "monthly_remaining_after_rent_eur": "1336.51",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20074",
+        "year": 2023,
+        "municipality_name": "Bergara",
+        "territory_name": "Gipuzkoa",
+        "population": 14739,
+        "monthly_rent_eur": "599.03",
+        "rent_per_m2_eur": "7.31289",
+        "deposit_count": 89,
+        "available_income_annual_eur": "24215.00",
+        "monthly_available_income_eur": "2017.916666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "29.68556679743960355151765434647945",
+        "monthly_remaining_after_rent_eur": "1418.886666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20049",
+        "year": 2023,
+        "municipality_name": "Lazkao",
+        "territory_name": "Gipuzkoa",
+        "population": 5818,
+        "monthly_rent_eur": "596.05",
+        "rent_per_m2_eur": "7.18146",
+        "deposit_count": 59,
+        "available_income_annual_eur": "24016.00",
+        "monthly_available_income_eur": "2001.333333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "29.78264490339773484343770819453698",
+        "monthly_remaining_after_rent_eur": "1405.283333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20018",
+        "year": 2023,
+        "municipality_name": "Azpeitia",
+        "territory_name": "Gipuzkoa",
+        "population": 15320,
+        "monthly_rent_eur": "598.87",
+        "rent_per_m2_eur": "6.92149",
+        "deposit_count": 114,
+        "available_income_annual_eur": "22921.00",
+        "monthly_available_income_eur": "1910.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "31.35308232625103616770647004929977",
+        "monthly_remaining_after_rent_eur": "1311.213333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48032",
+        "year": 2023,
+        "municipality_name": "Elorrio",
+        "territory_name": "Bizkaia",
+        "population": 7382,
+        "monthly_rent_eur": "615.68",
+        "rent_per_m2_eur": "7.36604",
+        "deposit_count": 61,
+        "available_income_annual_eur": "22773.00",
+        "monthly_available_income_eur": "1897.75",
+        "rent_as_share_of_available_income_percent": "32.44262942958766960874720063232776",
+        "monthly_remaining_after_rent_eur": "1282.07",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20080",
+        "year": 2023,
+        "municipality_name": "Zumarraga",
+        "territory_name": "Gipuzkoa",
+        "population": 9573,
+        "monthly_rent_eur": "568.77",
+        "rent_per_m2_eur": "7.39853",
+        "deposit_count": 87,
+        "available_income_annual_eur": "21011.00",
+        "monthly_available_income_eur": "1750.916666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "32.48412736185807434201132739993336",
+        "monthly_remaining_after_rent_eur": "1182.146666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "01051",
+        "year": 2023,
+        "municipality_name": "Salvatierra/Agurain",
+        "territory_name": "Araba/Álava",
+        "population": 5254,
+        "monthly_rent_eur": "509.05",
+        "rent_per_m2_eur": "5.93395",
+        "deposit_count": 38,
+        "available_income_annual_eur": "18752.00",
+        "monthly_available_income_eur": "1562.666666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "32.57572525597269624573378839590443",
+        "monthly_remaining_after_rent_eur": "1053.616666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48057",
+        "year": 2023,
+        "municipality_name": "Lekeitio",
+        "territory_name": "Bizkaia",
+        "population": 7107,
+        "monthly_rent_eur": "576.93",
+        "rent_per_m2_eur": "8.22989",
+        "deposit_count": 45,
+        "available_income_annual_eur": "21157.00",
+        "monthly_available_income_eur": "1763.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "32.72278678451576310440988798033748",
+        "monthly_remaining_after_rent_eur": "1186.153333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20030",
+        "year": 2023,
+        "municipality_name": "Eibar",
+        "territory_name": "Gipuzkoa",
+        "population": 26926,
+        "monthly_rent_eur": "605.05",
+        "rent_per_m2_eur": "8.35762",
+        "deposit_count": 334,
+        "available_income_annual_eur": "22160.00",
+        "monthly_available_income_eur": "1846.666666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "32.76444043321299638989169675090252",
+        "monthly_remaining_after_rent_eur": "1241.616666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "01002",
+        "year": 2023,
+        "municipality_name": "Amurrio",
+        "territory_name": "Araba/Álava",
+        "population": 10394,
+        "monthly_rent_eur": "574.29",
+        "rent_per_m2_eur": "6.62515",
+        "deposit_count": 81,
+        "available_income_annual_eur": "20845.00",
+        "monthly_available_income_eur": "1737.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "33.06059006956104581434396737826818",
+        "monthly_remaining_after_rent_eur": "1162.793333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48017",
+        "year": 2023,
+        "municipality_name": "Bermeo",
+        "territory_name": "Bizkaia",
+        "population": 16831,
+        "monthly_rent_eur": "552.67",
+        "rent_per_m2_eur": "7.29161",
+        "deposit_count": 147,
+        "available_income_annual_eur": "19913.00",
+        "monthly_available_income_eur": "1659.416666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "33.30507708532114698940390699543011",
+        "monthly_remaining_after_rent_eur": "1106.746666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20055",
+        "year": 2023,
+        "municipality_name": "Arrasate/Mondragón",
+        "territory_name": "Gipuzkoa",
+        "population": 21693,
+        "monthly_rent_eur": "643.94",
+        "rent_per_m2_eur": "8.34328",
+        "deposit_count": 238,
+        "available_income_annual_eur": "22898.00",
+        "monthly_available_income_eur": "1908.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "33.74652808105511398375403965411826",
+        "monthly_remaining_after_rent_eur": "1264.226666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20019",
+        "year": 2023,
+        "municipality_name": "Beasain",
+        "territory_name": "Gipuzkoa",
+        "population": 13850,
+        "monthly_rent_eur": "659.38",
+        "rent_per_m2_eur": "8.31391",
+        "deposit_count": 137,
+        "available_income_annual_eur": "23430.00",
+        "monthly_available_income_eur": "1952.50",
+        "rent_as_share_of_available_income_percent": "33.77106274007682458386683738796415",
+        "monthly_remaining_after_rent_eur": "1293.12",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48073",
+        "year": 2023,
+        "municipality_name": "Ondarroa",
+        "territory_name": "Bizkaia",
+        "population": 8277,
+        "monthly_rent_eur": "551.06",
+        "rent_per_m2_eur": "7.50423",
+        "deposit_count": 48,
+        "available_income_annual_eur": "19454.00",
+        "monthly_available_income_eur": "1621.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "33.99156985709879716253726740002055",
+        "monthly_remaining_after_rent_eur": "1070.106666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20029",
+        "year": 2023,
+        "municipality_name": "Deba",
+        "territory_name": "Gipuzkoa",
+        "population": 5373,
+        "monthly_rent_eur": "662.12",
+        "rent_per_m2_eur": "8.08621",
+        "deposit_count": 55,
+        "available_income_annual_eur": "23027.00",
+        "monthly_available_income_eur": "1918.916666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "34.50488556911451774004429582663829",
+        "monthly_remaining_after_rent_eur": "1256.796666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20076",
+        "year": 2023,
+        "municipality_name": "Ordizia",
+        "territory_name": "Gipuzkoa",
+        "population": 10217,
+        "monthly_rent_eur": "640.39",
+        "rent_per_m2_eur": "8.1191",
+        "deposit_count": 120,
+        "available_income_annual_eur": "22265.00",
+        "monthly_available_income_eur": "1855.416666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "34.51461935773635751178980462609476",
+        "monthly_remaining_after_rent_eur": "1215.026666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20071",
+        "year": 2023,
+        "municipality_name": "Tolosa",
+        "territory_name": "Gipuzkoa",
+        "population": 19929,
+        "monthly_rent_eur": "682.47",
+        "rent_per_m2_eur": "8.79386",
+        "deposit_count": 225,
+        "available_income_annual_eur": "23502.00",
+        "monthly_available_income_eur": "1958.50",
+        "rent_as_share_of_available_income_percent": "34.84656624968087822312994638754149",
+        "monthly_remaining_after_rent_eur": "1276.03",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48027",
+        "year": 2023,
+        "municipality_name": "Durango",
+        "territory_name": "Bizkaia",
+        "population": 29787,
+        "monthly_rent_eur": "687.38",
+        "rent_per_m2_eur": "9.40304",
+        "deposit_count": 290,
+        "available_income_annual_eur": "23568.00",
+        "monthly_available_income_eur": "1964.00",
+        "rent_as_share_of_available_income_percent": "34.99898167006109979633401221995927",
+        "monthly_remaining_after_rent_eur": "1276.62",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48034",
+        "year": 2023,
+        "municipality_name": "Ermua",
+        "territory_name": "Bizkaia",
+        "population": 15633,
+        "monthly_rent_eur": "583.39",
+        "rent_per_m2_eur": "8.33594",
+        "deposit_count": 131,
+        "available_income_annual_eur": "19934.00",
+        "monthly_available_income_eur": "1661.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "35.11929366910805658673622955753987",
+        "monthly_remaining_after_rent_eur": "1077.776666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48001",
+        "year": 2023,
+        "municipality_name": "Abadiño",
+        "territory_name": "Bizkaia",
+        "population": 7745,
+        "monthly_rent_eur": "644.42",
+        "rent_per_m2_eur": "7.88447",
+        "deposit_count": 52,
+        "available_income_annual_eur": "21804.00",
+        "monthly_available_income_eur": "1817.00",
+        "rent_as_share_of_available_income_percent": "35.46615299944964226747385800770501",
+        "monthly_remaining_after_rent_eur": "1172.58",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "01036",
+        "year": 2023,
+        "municipality_name": "Laudio/Llodio",
+        "territory_name": "Araba/Álava",
+        "population": 18030,
+        "monthly_rent_eur": "592.52",
+        "rent_per_m2_eur": "7.57194",
+        "deposit_count": 160,
+        "available_income_annual_eur": "19894.00",
+        "monthly_available_income_eur": "1657.833333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "35.74062531416507489695385543379914",
+        "monthly_remaining_after_rent_eur": "1065.313333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48096",
+        "year": 2023,
+        "municipality_name": "Zalla",
+        "territory_name": "Bizkaia",
+        "population": 8244,
+        "monthly_rent_eur": "599.87",
+        "rent_per_m2_eur": "7.68062",
+        "deposit_count": 65,
+        "available_income_annual_eur": "20054.00",
+        "monthly_available_income_eur": "1671.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "35.89528273661114989528273661114989",
+        "monthly_remaining_after_rent_eur": "1071.296666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48046",
+        "year": 2023,
+        "municipality_name": "Gernika-Lumo",
+        "territory_name": "Bizkaia",
+        "population": 16847,
+        "monthly_rent_eur": "636.63",
+        "rent_per_m2_eur": "7.72768",
+        "deposit_count": 131,
+        "available_income_annual_eur": "21176.00",
+        "monthly_available_income_eur": "1764.666666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "36.07650170003777861730260672459387",
+        "monthly_remaining_after_rent_eur": "1128.036666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48045",
+        "year": 2023,
+        "municipality_name": "Güeñes",
+        "territory_name": "Bizkaia",
+        "population": 6661,
+        "monthly_rent_eur": "591.96",
+        "rent_per_m2_eur": "7.71544",
+        "deposit_count": 47,
+        "available_income_annual_eur": "19609.00",
+        "monthly_available_income_eur": "1634.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "36.22581467693406089040746595950840",
+        "monthly_remaining_after_rent_eur": "1042.123333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20081",
+        "year": 2023,
+        "municipality_name": "Zumaia",
+        "territory_name": "Gipuzkoa",
+        "population": 10054,
+        "monthly_rent_eur": "742.42",
+        "rent_per_m2_eur": "9.06094",
+        "deposit_count": 97,
+        "available_income_annual_eur": "24530.00",
+        "monthly_available_income_eur": "2044.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "36.31895637994292702812882185079494",
+        "monthly_remaining_after_rent_eur": "1301.746666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48071",
+        "year": 2023,
+        "municipality_name": "Muskiz",
+        "territory_name": "Bizkaia",
+        "population": 7178,
+        "monthly_rent_eur": "622.45",
+        "rent_per_m2_eur": "8.11354",
+        "deposit_count": 51,
+        "available_income_annual_eur": "20551.00",
+        "monthly_available_income_eur": "1712.583333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "36.34567660941073427083840202423240",
+        "monthly_remaining_after_rent_eur": "1090.133333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48069",
+        "year": 2023,
+        "municipality_name": "Mungia",
+        "territory_name": "Bizkaia",
+        "population": 17515,
+        "monthly_rent_eur": "754.89",
+        "rent_per_m2_eur": "8.86468",
+        "deposit_count": 166,
+        "available_income_annual_eur": "24453.00",
+        "monthly_available_income_eur": "2037.75",
+        "rent_as_share_of_available_income_percent": "37.04527051895472948104527051895473",
+        "monthly_remaining_after_rent_eur": "1282.86",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48003",
+        "year": 2023,
+        "municipality_name": "Amorebieta-Etxano",
+        "territory_name": "Bizkaia",
+        "population": 19208,
+        "monthly_rent_eur": "687.11",
+        "rent_per_m2_eur": "8.35586",
+        "deposit_count": 132,
+        "available_income_annual_eur": "22083.00",
+        "monthly_available_income_eur": "1840.25",
+        "rent_as_share_of_available_income_percent": "37.33786170357288411900556989539465",
+        "monthly_remaining_after_rent_eur": "1153.14",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20075",
+        "year": 2023,
+        "municipality_name": "Villabona",
+        "territory_name": "Gipuzkoa",
+        "population": 5706,
+        "monthly_rent_eur": "653.2",
+        "rent_per_m2_eur": "7.7462",
+        "deposit_count": 49,
+        "available_income_annual_eur": "20930.00",
+        "monthly_available_income_eur": "1744.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "37.45054945054945054945054945054944",
+        "monthly_remaining_after_rent_eur": "1090.966666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48090",
+        "year": 2023,
+        "municipality_name": "Balmaseda",
+        "territory_name": "Bizkaia",
+        "population": 7663,
+        "monthly_rent_eur": "562.68",
+        "rent_per_m2_eur": "7.6163",
+        "deposit_count": 75,
+        "available_income_annual_eur": "17983.00",
+        "monthly_available_income_eur": "1498.583333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "37.54746149140855252182616915976201",
+        "monthly_remaining_after_rent_eur": "935.903333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48016",
+        "year": 2023,
+        "municipality_name": "Berango",
+        "territory_name": "Bizkaia",
+        "population": 7625,
+        "monthly_rent_eur": "792.34",
+        "rent_per_m2_eur": "10.5979",
+        "deposit_count": 42,
+        "available_income_annual_eur": "25217.00",
+        "monthly_available_income_eur": "2101.416666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "37.70504025062457865725502637109886",
+        "monthly_remaining_after_rent_eur": "1309.076666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48043",
+        "year": 2023,
+        "municipality_name": "Gorliz",
+        "territory_name": "Bizkaia",
+        "population": 6110,
+        "monthly_rent_eur": "746.15",
+        "rent_per_m2_eur": "9.39722",
+        "deposit_count": 39,
+        "available_income_annual_eur": "23683.00",
+        "monthly_available_income_eur": "1973.583333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "37.80686568424608368872186800658701",
+        "monthly_remaining_after_rent_eur": "1227.433333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48036",
+        "year": 2023,
+        "municipality_name": "Galdakao",
+        "territory_name": "Bizkaia",
+        "population": 29338,
+        "monthly_rent_eur": "712.05",
+        "rent_per_m2_eur": "9.20914",
+        "deposit_count": 168,
+        "available_income_annual_eur": "22009.00",
+        "monthly_available_income_eur": "1834.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "38.82320868735517288382025535008406",
+        "monthly_remaining_after_rent_eur": "1122.033333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20063",
+        "year": 2023,
+        "municipality_name": "Oiartzun",
+        "territory_name": "Gipuzkoa",
+        "population": 10340,
+        "monthly_rent_eur": "746.36",
+        "rent_per_m2_eur": "8.84854",
+        "deposit_count": 69,
+        "available_income_annual_eur": "22773.00",
+        "monthly_available_income_eur": "1897.75",
+        "rent_as_share_of_available_income_percent": "39.32867869845870109340007904096957",
+        "monthly_remaining_after_rent_eur": "1151.39",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20009",
+        "year": 2023,
+        "municipality_name": "Andoain",
+        "territory_name": "Gipuzkoa",
+        "population": 14783,
+        "monthly_rent_eur": "699.14",
+        "rent_per_m2_eur": "8.79757",
+        "deposit_count": 115,
+        "available_income_annual_eur": "21194.00",
+        "monthly_available_income_eur": "1766.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "39.58516561290931395678022081721241",
+        "monthly_remaining_after_rent_eur": "1067.026666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20036",
+        "year": 2023,
+        "municipality_name": "Hondarribia",
+        "territory_name": "Gipuzkoa",
+        "population": 17029,
+        "monthly_rent_eur": "823.49",
+        "rent_per_m2_eur": "10.5298",
+        "deposit_count": 195,
+        "available_income_annual_eur": "24901.00",
+        "monthly_available_income_eur": "2075.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "39.68467129834143207100116461186298",
+        "monthly_remaining_after_rent_eur": "1251.593333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48002",
+        "year": 2023,
+        "municipality_name": "Abanto y Ciérvana-Abanto Zierbena",
+        "territory_name": "Bizkaia",
+        "population": 9366,
+        "monthly_rent_eur": "651.03",
+        "rent_per_m2_eur": "9.54879",
+        "deposit_count": 58,
+        "available_income_annual_eur": "19685.00",
+        "monthly_available_income_eur": "1640.416666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "39.68686817373634747269494538989077",
+        "monthly_remaining_after_rent_eur": "989.386666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48011",
+        "year": 2023,
+        "municipality_name": "Arrigorriaga",
+        "territory_name": "Bizkaia",
+        "population": 11712,
+        "monthly_rent_eur": "680.4",
+        "rent_per_m2_eur": "8.64841",
+        "deposit_count": 69,
+        "available_income_annual_eur": "20561.00",
+        "monthly_available_income_eur": "1713.416666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "39.71013083021253830066631000437721",
+        "monthly_remaining_after_rent_eur": "1033.016666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48044",
+        "year": 2023,
+        "municipality_name": "Getxo",
+        "territory_name": "Bizkaia",
+        "population": 75430,
+        "monthly_rent_eur": "942.82",
+        "rent_per_m2_eur": "12.0179",
+        "deposit_count": 719,
+        "available_income_annual_eur": "28218.00",
+        "monthly_available_income_eur": "2351.50",
+        "rent_as_share_of_available_income_percent": "40.09440782479268551988092706782905",
+        "monthly_remaining_after_rent_eur": "1408.68",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48085",
+        "year": 2023,
+        "municipality_name": "Sopela",
+        "territory_name": "Bizkaia",
+        "population": 13850,
+        "monthly_rent_eur": "840.93",
+        "rent_per_m2_eur": "10.4093",
+        "deposit_count": 129,
+        "available_income_annual_eur": "25017.00",
+        "monthly_available_income_eur": "2084.75",
+        "rent_as_share_of_available_income_percent": "40.33721069672622616620697925410721",
+        "monthly_remaining_after_rent_eur": "1243.82",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48080",
+        "year": 2023,
+        "municipality_name": "Valle de Trápaga-Trapagaran",
+        "territory_name": "Bizkaia",
+        "population": 11749,
+        "monthly_rent_eur": "644.44",
+        "rent_per_m2_eur": "9.28691",
+        "deposit_count": 59,
+        "available_income_annual_eur": "19150.00",
+        "monthly_available_income_eur": "1595.833333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "40.38266318537859007832898172323761",
+        "monthly_remaining_after_rent_eur": "951.393333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48083",
+        "year": 2023,
+        "municipality_name": "Ortuella",
+        "territory_name": "Bizkaia",
+        "population": 8464,
+        "monthly_rent_eur": "625.85",
+        "rent_per_m2_eur": "9.33603",
+        "deposit_count": 52,
+        "available_income_annual_eur": "18423.00",
+        "monthly_available_income_eur": "1535.25",
+        "rent_as_share_of_available_income_percent": "40.76534766324702817130760462465397",
+        "monthly_remaining_after_rent_eur": "909.40",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20061",
+        "year": 2023,
+        "municipality_name": "Orio",
+        "territory_name": "Gipuzkoa",
+        "population": 6131,
+        "monthly_rent_eur": "810.43",
+        "rent_per_m2_eur": "9.69663",
+        "deposit_count": 58,
+        "available_income_annual_eur": "23665.00",
+        "monthly_available_income_eur": "1972.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "41.09511937460384534122121276146208",
+        "monthly_remaining_after_rent_eur": "1161.653333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20073",
+        "year": 2023,
+        "municipality_name": "Usurbil",
+        "territory_name": "Gipuzkoa",
+        "population": 6350,
+        "monthly_rent_eur": "776.02",
+        "rent_per_m2_eur": "10.128",
+        "deposit_count": 57,
+        "available_income_annual_eur": "22597.00",
+        "monthly_available_income_eur": "1883.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "41.21007213346904456343762446342436",
+        "monthly_remaining_after_rent_eur": "1107.063333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48901",
+        "year": 2023,
+        "municipality_name": "Derio",
+        "territory_name": "Bizkaia",
+        "population": 7311,
+        "monthly_rent_eur": "771.19",
+        "rent_per_m2_eur": "9.74067",
+        "deposit_count": 44,
+        "available_income_annual_eur": "22154.00",
+        "monthly_available_income_eur": "1846.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "41.77250157985013992958382233456711",
+        "monthly_remaining_after_rent_eur": "1074.976666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20040",
+        "year": 2023,
+        "municipality_name": "Hernani",
+        "territory_name": "Gipuzkoa",
+        "population": 20647,
+        "monthly_rent_eur": "730.04",
+        "rent_per_m2_eur": "9.4879",
+        "deposit_count": 173,
+        "available_income_annual_eur": "20865.00",
+        "monthly_available_income_eur": "1738.75",
+        "rent_as_share_of_available_income_percent": "41.98648454349388928828181164629763",
+        "monthly_remaining_after_rent_eur": "1008.71",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "01059",
+        "year": 2023,
+        "municipality_name": "Vitoria-Gasteiz",
+        "territory_name": "Araba/Álava",
+        "population": 250100,
+        "monthly_rent_eur": "750.74",
+        "rent_per_m2_eur": "9.76407",
+        "deposit_count": 2491,
+        "available_income_annual_eur": "21047.00",
+        "monthly_available_income_eur": "1753.916666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "42.80362997101724711360288877274670",
+        "monthly_remaining_after_rent_eur": "1003.176666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20072",
+        "year": 2023,
+        "municipality_name": "Urnieta",
+        "territory_name": "Gipuzkoa",
+        "population": 6180,
+        "monthly_rent_eur": "772.34",
+        "rent_per_m2_eur": "9.4842",
+        "deposit_count": 48,
+        "available_income_annual_eur": "21443.00",
+        "monthly_available_income_eur": "1786.916666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "43.22193722893251877069439910460289",
+        "monthly_remaining_after_rent_eur": "1014.576666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48089",
+        "year": 2023,
+        "municipality_name": "Urduliz",
+        "territory_name": "Bizkaia",
+        "population": 5385,
+        "monthly_rent_eur": "856.86",
+        "rent_per_m2_eur": "10.2274",
+        "deposit_count": 46,
+        "available_income_annual_eur": "23689.00",
+        "monthly_available_income_eur": "1974.083333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "43.40546245092659040060787707374732",
+        "monthly_remaining_after_rent_eur": "1117.223333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48078",
+        "year": 2023,
+        "municipality_name": "Portugalete",
+        "territory_name": "Bizkaia",
+        "population": 44919,
+        "monthly_rent_eur": "699.48",
+        "rent_per_m2_eur": "10.3631",
+        "deposit_count": 352,
+        "available_income_annual_eur": "19323.00",
+        "monthly_available_income_eur": "1610.25",
+        "rent_as_share_of_available_income_percent": "43.43921751280857009781089892873777",
+        "monthly_remaining_after_rent_eur": "910.77",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48029",
+        "year": 2023,
+        "municipality_name": "Etxebarri",
+        "territory_name": "Bizkaia",
+        "population": 11858,
+        "monthly_rent_eur": "800.4",
+        "rent_per_m2_eur": "9.90312",
+        "deposit_count": 64,
+        "available_income_annual_eur": "22043.00",
+        "monthly_available_income_eur": "1836.916666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "43.57301637708115955178514721226692",
+        "monthly_remaining_after_rent_eur": "1036.516666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48082",
+        "year": 2023,
+        "municipality_name": "Santurtzi",
+        "territory_name": "Bizkaia",
+        "population": 45699,
+        "monthly_rent_eur": "703.51",
+        "rent_per_m2_eur": "10.5333",
+        "deposit_count": 367,
+        "available_income_annual_eur": "19300.00",
+        "monthly_available_income_eur": "1608.333333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "43.74155440414507772020725388601037",
+        "monthly_remaining_after_rent_eur": "904.823333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20903",
+        "year": 2023,
+        "municipality_name": "Astigarraga",
+        "territory_name": "Gipuzkoa",
+        "population": 7536,
+        "monthly_rent_eur": "882.08",
+        "rent_per_m2_eur": "10.9979",
+        "deposit_count": 68,
+        "available_income_annual_eur": "24150.00",
+        "monthly_available_income_eur": "2012.50",
+        "rent_as_share_of_available_income_percent": "43.83006211180124223602484472049689",
+        "monthly_remaining_after_rent_eur": "1130.42",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20079",
+        "year": 2023,
+        "municipality_name": "Zarautz",
+        "territory_name": "Gipuzkoa",
+        "population": 23118,
+        "monthly_rent_eur": "897.77",
+        "rent_per_m2_eur": "10.9405",
+        "deposit_count": 266,
+        "available_income_annual_eur": "24369.00",
+        "monthly_available_income_eur": "2030.75",
+        "rent_as_share_of_available_income_percent": "44.20878985596454511879847347039271",
+        "monthly_remaining_after_rent_eur": "1132.98",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20053",
+        "year": 2023,
+        "municipality_name": "Lezo",
+        "territory_name": "Gipuzkoa",
+        "population": 6038,
+        "monthly_rent_eur": "745.21",
+        "rent_per_m2_eur": "9.91766",
+        "deposit_count": 58,
+        "available_income_annual_eur": "20168.00",
+        "monthly_available_income_eur": "1680.666666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "44.34014280047600158667195557318524",
+        "monthly_remaining_after_rent_eur": "935.456666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48015",
+        "year": 2023,
+        "municipality_name": "Basauri",
+        "territory_name": "Bizkaia",
+        "population": 40363,
+        "monthly_rent_eur": "697.57",
+        "rent_per_m2_eur": "9.79773",
+        "deposit_count": 290,
+        "available_income_annual_eur": "18376.00",
+        "monthly_available_income_eur": "1531.333333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "45.55311275576839355681323465389640",
+        "monthly_remaining_after_rent_eur": "833.763333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48054",
+        "year": 2023,
+        "municipality_name": "Leioa",
+        "territory_name": "Bizkaia",
+        "population": 32255,
+        "monthly_rent_eur": "878.86",
+        "rent_per_m2_eur": "11.1481",
+        "deposit_count": 191,
+        "available_income_annual_eur": "23078.00",
+        "monthly_available_income_eur": "1923.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "45.69858739925470144726579426293439",
+        "monthly_remaining_after_rent_eur": "1044.306666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48013",
+        "year": 2023,
+        "municipality_name": "Barakaldo",
+        "territory_name": "Bizkaia",
+        "population": 98783,
+        "monthly_rent_eur": "734.61",
+        "rent_per_m2_eur": "10.8994",
+        "deposit_count": 914,
+        "available_income_annual_eur": "19016.00",
+        "monthly_available_income_eur": "1584.666666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "46.35738325620530079932688262515775",
+        "monthly_remaining_after_rent_eur": "850.056666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48020",
+        "year": 2023,
+        "municipality_name": "Bilbao",
+        "territory_name": "Bizkaia",
+        "population": 342484,
+        "monthly_rent_eur": "852.18",
+        "rent_per_m2_eur": "12.3527",
+        "deposit_count": 3737,
+        "available_income_annual_eur": "21909.00",
+        "monthly_available_income_eur": "1825.75",
+        "rent_as_share_of_available_income_percent": "46.67561276187867999452279884978776",
+        "monthly_remaining_after_rent_eur": "973.57",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20067",
+        "year": 2023,
+        "municipality_name": "Errenteria",
+        "territory_name": "Gipuzkoa",
+        "population": 39665,
+        "monthly_rent_eur": "755.72",
+        "rent_per_m2_eur": "10.5294",
+        "deposit_count": 339,
+        "available_income_annual_eur": "19368.00",
+        "monthly_available_income_eur": "1614.00",
+        "rent_as_share_of_available_income_percent": "46.82280049566294919454770755885998",
+        "monthly_remaining_after_rent_eur": "858.28",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48084",
+        "year": 2023,
+        "municipality_name": "Sestao",
+        "territory_name": "Bizkaia",
+        "population": 27364,
+        "monthly_rent_eur": "655.38",
+        "rent_per_m2_eur": "9.73134",
+        "deposit_count": 244,
+        "available_income_annual_eur": "16786.00",
+        "monthly_available_income_eur": "1398.833333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "46.85190039318479685452162516382701",
+        "monthly_remaining_after_rent_eur": "743.453333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20045",
+        "year": 2023,
+        "municipality_name": "Irun",
+        "territory_name": "Gipuzkoa",
+        "population": 60191,
+        "monthly_rent_eur": "771.76",
+        "rent_per_m2_eur": "9.65085",
+        "deposit_count": 655,
+        "available_income_annual_eur": "19564.00",
+        "monthly_available_income_eur": "1630.333333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "47.33755878143528930689020650173790",
+        "monthly_remaining_after_rent_eur": "858.573333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20902",
+        "year": 2023,
+        "municipality_name": "Lasarte-Oria",
+        "territory_name": "Gipuzkoa",
+        "population": 19504,
+        "monthly_rent_eur": "819.06",
+        "rent_per_m2_eur": "10.7397",
+        "deposit_count": 175,
+        "available_income_annual_eur": "20685.00",
+        "monthly_available_income_eur": "1723.75",
+        "rent_as_share_of_available_income_percent": "47.51617113850616388687454677302393",
+        "monthly_remaining_after_rent_eur": "904.69",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "48902",
+        "year": 2023,
+        "municipality_name": "Erandio",
+        "territory_name": "Bizkaia",
+        "population": 23958,
+        "monthly_rent_eur": "739.97",
+        "rent_per_m2_eur": "10.1012",
+        "deposit_count": 154,
+        "available_income_annual_eur": "18126.00",
+        "monthly_available_income_eur": "1510.50",
+        "rent_as_share_of_available_income_percent": "48.98841443230718305196954650777888",
+        "monthly_remaining_after_rent_eur": "770.53",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20069",
+        "year": 2023,
+        "municipality_name": "Donostia / San Sebastián",
+        "territory_name": "Gipuzkoa",
+        "population": 182641,
+        "monthly_rent_eur": "1035.11",
+        "rent_per_m2_eur": "13.8096",
+        "deposit_count": 2237,
+        "available_income_annual_eur": "25286.00",
+        "monthly_available_income_eur": "2107.166666666666666666666666666667",
+        "rent_as_share_of_available_income_percent": "49.12330934113738827809855255872814",
+        "monthly_remaining_after_rent_eur": "1072.056666666666666666666666666667",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      },
+      {
+        "municipality_code": "20064",
+        "year": 2023,
+        "municipality_name": "Pasaia",
+        "territory_name": "Gipuzkoa",
+        "population": 16658,
+        "monthly_rent_eur": "772.17",
+        "rent_per_m2_eur": "10.5015",
+        "deposit_count": 180,
+        "available_income_annual_eur": "18355.00",
+        "monthly_available_income_eur": "1529.583333333333333333333333333333",
+        "rent_as_share_of_available_income_percent": "50.48237537455734132388994824298557",
+        "monthly_remaining_after_rent_eur": "757.413333333333333333333333333333",
+        "income_measure": "Adult mean available personal income, not a youth wage"
+      }
+    ]
+  },
+  "evolucion_del_alquiler_ponderada_por_fianzas_y_territorio": {
+    "collection": "alquileres",
+    "pipeline": [
+      {
+        "$match": {
+          "geography.included_in_current_boundary_comparison": true,
+          "rental.monthly_eur": {
+            "$gt": "0"
+          },
+          "rental.deposit_count": {
+            "$gt": 0
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "municipios",
+          "localField": "municipality_code",
+          "foreignField": "_id",
+          "as": "municipality"
+        }
+      },
+      {
+        "$unwind": "$municipality"
+      },
+      {
+        "$group": {
+          "_id": {
+            "territory_code": "$municipality.territory.code",
+            "territory_name": "$municipality.territory.name",
+            "year": "$year"
+          },
+          "weighted_rent_sum": {
+            "$sum": {
+              "$multiply": [
+                "$rental.monthly_eur",
+                "$rental.deposit_count"
+              ]
+            }
+          },
+          "total_deposits": {
+            "$sum": "$rental.deposit_count"
+          },
+          "municipality_count": {
+            "$sum": 1
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "territory_code": "$_id.territory_code",
+          "territory_name": "$_id.territory_name",
+          "year": "$_id.year",
+          "weighted_monthly_rent_eur": {
+            "$divide": [
+              "$weighted_rent_sum",
+              "$total_deposits"
+            ]
+          },
+          "total_deposits": 1,
+          "municipality_count": 1
+        }
+      },
+      {
+        "$sort": {
+          "territory_code": 1,
+          "year": 1
+        }
+      }
+    ],
+    "result_count": 30,
+    "results": [
+      {
+        "total_deposits": 2394,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2016,
+        "weighted_monthly_rent_eur": "556.5880952380952380952380952380952"
+      },
+      {
+        "total_deposits": 2896,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2017,
+        "weighted_monthly_rent_eur": "573.3488812154696132596685082872928"
+      },
+      {
+        "total_deposits": 2899,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2018,
+        "weighted_monthly_rent_eur": "607.0364918937564677474991376336668"
+      },
+      {
+        "total_deposits": 2978,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2019,
+        "weighted_monthly_rent_eur": "634.5494358629952988582941571524513"
+      },
+      {
+        "total_deposits": 2572,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2020,
+        "weighted_monthly_rent_eur": "648.9251944012441679626749611197512"
+      },
+      {
+        "total_deposits": 2900,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2021,
+        "weighted_monthly_rent_eur": "658.8762827586206896551724137931034"
+      },
+      {
+        "total_deposits": 2897,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2022,
+        "weighted_monthly_rent_eur": "691.5117293752157404211253020365896"
+      },
+      {
+        "total_deposits": 2770,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2023,
+        "weighted_monthly_rent_eur": "733.1256064981949458483754512635379"
+      },
+      {
+        "total_deposits": 2512,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2024,
+        "weighted_monthly_rent_eur": "764.5794585987261146496815286624204"
+      },
+      {
+        "total_deposits": 2308,
+        "municipality_count": 3,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "year": 2025,
+        "weighted_monthly_rent_eur": "812.0992590987868284228769497400347"
+      },
+      {
+        "total_deposits": 5924,
+        "municipality_count": 31,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2016,
+        "weighted_monthly_rent_eur": "656.8331684672518568534773801485483"
+      },
+      {
+        "total_deposits": 7415,
+        "municipality_count": 34,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2017,
+        "weighted_monthly_rent_eur": "666.6887390424814565070802427511800"
+      },
+      {
+        "total_deposits": 7872,
+        "municipality_count": 33,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2018,
+        "weighted_monthly_rent_eur": "702.8778582317073170731707317073171"
+      },
+      {
+        "total_deposits": 7653,
+        "municipality_count": 34,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2019,
+        "weighted_monthly_rent_eur": "725.7393048477721155102574153926565"
+      },
+      {
+        "total_deposits": 7085,
+        "municipality_count": 34,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2020,
+        "weighted_monthly_rent_eur": "741.1790741002117148906139731827805"
+      },
+      {
+        "total_deposits": 7726,
+        "municipality_count": 33,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2021,
+        "weighted_monthly_rent_eur": "747.5884118560704115972042454051256"
+      },
+      {
+        "total_deposits": 7449,
+        "municipality_count": 34,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2022,
+        "weighted_monthly_rent_eur": "774.5308336689488521949254933548127"
+      },
+      {
+        "total_deposits": 6761,
+        "municipality_count": 34,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2023,
+        "weighted_monthly_rent_eur": "818.6523517231178819701227629048957"
+      },
+      {
+        "total_deposits": 6357,
+        "municipality_count": 33,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2024,
+        "weighted_monthly_rent_eur": "868.9257385559226050023596035865975"
+      },
+      {
+        "total_deposits": 5594,
+        "municipality_count": 33,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "year": 2025,
+        "weighted_monthly_rent_eur": "910.6714569181265641759027529495888"
+      },
+      {
+        "total_deposits": 7717,
+        "municipality_count": 33,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2016,
+        "weighted_monthly_rent_eur": "653.8674536737073992484125955682260"
+      },
+      {
+        "total_deposits": 9546,
+        "municipality_count": 34,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2017,
+        "weighted_monthly_rent_eur": "662.1484538026398491514770584538026"
+      },
+      {
+        "total_deposits": 9678,
+        "municipality_count": 34,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2018,
+        "weighted_monthly_rent_eur": "683.1241072535647861128332300061996"
+      },
+      {
+        "total_deposits": 8899,
+        "municipality_count": 34,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2019,
+        "weighted_monthly_rent_eur": "702.2694785931003483537476120912462"
+      },
+      {
+        "total_deposits": 7688,
+        "municipality_count": 34,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2020,
+        "weighted_monthly_rent_eur": "713.7933675858480749219562955254943"
+      },
+      {
+        "total_deposits": 9414,
+        "municipality_count": 35,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2021,
+        "weighted_monthly_rent_eur": "718.3245103038028468238793286594434"
+      },
+      {
+        "total_deposits": 10206,
+        "municipality_count": 35,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2022,
+        "weighted_monthly_rent_eur": "741.5309435626102292768959435626102"
+      },
+      {
+        "total_deposits": 9216,
+        "municipality_count": 35,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2023,
+        "weighted_monthly_rent_eur": "780.491259765625"
+      },
+      {
+        "total_deposits": 8210,
+        "municipality_count": 35,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2024,
+        "weighted_monthly_rent_eur": "828.4877356881851400730816077953715"
+      },
+      {
+        "total_deposits": 7245,
+        "municipality_count": 33,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "year": 2025,
+        "weighted_monthly_rent_eur": "888.0492118702553485162180814354727"
+      }
+    ]
+  },
+  "resumen_de_emancipacion_por_territorio_2023": {
+    "collection": "alquileres",
+    "pipeline": [
+      {
+        "$match": {
+          "year": 2023,
+          "geography.included_in_current_boundary_comparison": true,
+          "rental.monthly_eur": {
+            "$gt": "0"
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "socioeconomicos",
+          "let": {
+            "code": "$municipality_code",
+            "year": "$year"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "$expr": {
+                  "$and": [
+                    {
+                      "$eq": [
+                        "$municipality_code",
+                        "$$code"
+                      ]
+                    },
+                    {
+                      "$eq": [
+                        "$year",
+                        "$$year"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "indicators.available_income_eur": 1,
+                "indicators.population": 1
+              }
+            }
+          ],
+          "as": "socioeconomic"
+        }
+      },
+      {
+        "$unwind": "$socioeconomic"
+      },
+      {
+        "$match": {
+          "socioeconomic.indicators.available_income_eur": {
+            "$gt": "0"
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "municipios",
+          "localField": "municipality_code",
+          "foreignField": "_id",
+          "as": "municipality"
+        }
+      },
+      {
+        "$unwind": "$municipality"
+      },
+      {
+        "$addFields": {
+          "indicators.monthly_available_income_eur": {
+            "$divide": [
+              "$socioeconomic.indicators.available_income_eur",
+              "12"
+            ]
+          },
+          "indicators.rent_as_share_of_available_income_percent": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$rental.monthly_eur",
+                  {
+                    "$divide": [
+                      "$socioeconomic.indicators.available_income_eur",
+                      "12"
+                    ]
+                  }
+                ]
+              },
+              "100"
+            ]
+          },
+          "indicators.monthly_remaining_after_rent_eur": {
+            "$subtract": [
+              {
+                "$divide": [
+                  "$socioeconomic.indicators.available_income_eur",
+                  "12"
+                ]
+              },
+              "$rental.monthly_eur"
+            ]
+          }
+        }
+      },
+      {
+        "$facet": {
+          "resumen_territorial": [
+            {
+              "$group": {
+                "_id": {
+                  "territory_code": "$municipality.territory.code",
+                  "territory_name": "$municipality.territory.name"
+                },
+                "municipality_count": {
+                  "$sum": 1
+                },
+                "average_rent_eur": {
+                  "$avg": "$rental.monthly_eur"
+                },
+                "average_annual_available_income_eur": {
+                  "$avg": "$socioeconomic.indicators.available_income_eur"
+                },
+                "average_rent_share_percent": {
+                  "$avg": "$indicators.rent_as_share_of_available_income_percent"
+                },
+                "average_monthly_remaining_eur": {
+                  "$avg": "$indicators.monthly_remaining_after_rent_eur"
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "territory_code": "$_id.territory_code",
+                "territory_name": "$_id.territory_name",
+                "municipality_count": 1,
+                "average_rent_eur": 1,
+                "average_annual_available_income_eur": 1,
+                "average_rent_share_percent": 1,
+                "average_monthly_remaining_eur": 1
+              }
+            },
+            {
+              "$sort": {
+                "average_rent_share_percent": 1
+              }
+            }
+          ],
+          "ten_best_by_rent_share": [
+            {
+              "$sort": {
+                "indicators.rent_as_share_of_available_income_percent": 1
+              }
+            },
+            {
+              "$limit": 10
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "municipality_code": 1,
+                "municipality_name": "$municipality.municipality_name",
+                "territory_name": "$municipality.territory.name",
+                "monthly_rent_eur": "$rental.monthly_eur",
+                "rent_share_percent": "$indicators.rent_as_share_of_available_income_percent",
+                "monthly_remaining_eur": "$indicators.monthly_remaining_after_rent_eur"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "result_count": 1,
+    "results": [
+      {
+        "resumen_territorial": [
+          {
+            "municipality_count": 4,
+            "average_rent_eur": "606.65",
+            "average_annual_available_income_eur": "20134.50",
+            "average_rent_share_percent": "36.04514265267901601765862499517962",
+            "average_monthly_remaining_eur": "1071.225000000000000000000000000000",
+            "territory_code": "01",
+            "territory_name": "Araba/Álava"
+          },
+          {
+            "municipality_count": 34,
+            "average_rent_eur": "695.1826470588235294117647058823529",
+            "average_annual_available_income_eur": "22599.64705882352941176470588235294",
+            "average_rent_share_percent": "37.15753488466122682551607271087959",
+            "average_monthly_remaining_eur": "1188.121274509803921568627450980393",
+            "territory_code": "20",
+            "territory_name": "Gipuzkoa"
+          },
+          {
+            "municipality_count": 35,
+            "average_rent_eur": "692.14",
+            "average_annual_available_income_eur": "21203.51428571428571428571428571429",
+            "average_rent_share_percent": "39.28845003363154276577752449957143",
+            "average_monthly_remaining_eur": "1074.819523809523809523809523809524",
+            "territory_code": "48",
+            "territory_name": "Bizkaia"
+          }
+        ],
+        "ten_best_by_rent_share": [
+          {
+            "municipality_code": "20059",
+            "municipality_name": "Oñati",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "581.48",
+            "rent_share_percent": "26.77061193170918856704392863993862",
+            "monthly_remaining_eur": "1590.603333333333333333333333333333"
+          },
+          {
+            "municipality_code": "20056",
+            "municipality_name": "Mutriku",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "517.93",
+            "rent_share_percent": "28.73265221210300032360963432111322",
+            "monthly_remaining_eur": "1284.653333333333333333333333333333"
+          },
+          {
+            "municipality_code": "20013",
+            "municipality_name": "Aretxabaleta",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "590.26",
+            "rent_share_percent": "28.93076828819997549319936282318343",
+            "monthly_remaining_eur": "1449.99"
+          },
+          {
+            "municipality_code": "48060",
+            "municipality_name": "Markina-Xemein",
+            "territory_name": "Bizkaia",
+            "monthly_rent_eur": "531.76",
+            "rent_share_percent": "29.20688392530208714756499450750640",
+            "monthly_remaining_eur": "1288.906666666666666666666666666667"
+          },
+          {
+            "municipality_code": "20032",
+            "municipality_name": "Elgoibar",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "570.23",
+            "rent_share_percent": "29.28511512453992981254814688008217",
+            "monthly_remaining_eur": "1376.936666666666666666666666666667"
+          },
+          {
+            "municipality_code": "20017",
+            "municipality_name": "Azkoitia",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "574.1",
+            "rent_share_percent": "29.43347859523199179697513458087670",
+            "monthly_remaining_eur": "1376.40"
+          },
+          {
+            "municipality_code": "20051",
+            "municipality_name": "Legazpi",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "551.08",
+            "rent_share_percent": "29.57760085875301905358261025136416",
+            "monthly_remaining_eur": "1312.086666666666666666666666666667"
+          },
+          {
+            "municipality_code": "20077",
+            "municipality_name": "Urretxu",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "562.74",
+            "rent_share_percent": "29.62959062787942608924575490325128",
+            "monthly_remaining_eur": "1336.51"
+          },
+          {
+            "municipality_code": "20074",
+            "municipality_name": "Bergara",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "599.03",
+            "rent_share_percent": "29.68556679743960355151765434647945",
+            "monthly_remaining_eur": "1418.886666666666666666666666666667"
+          },
+          {
+            "municipality_code": "20049",
+            "municipality_name": "Lazkao",
+            "territory_name": "Gipuzkoa",
+            "monthly_rent_eur": "596.05",
+            "rent_share_percent": "29.78264490339773484343770819453698",
+            "monthly_remaining_eur": "1405.283333333333333333333333333333"
+          }
+        ]
+      }
+    ]
+  },
+  "municipios_ordenados_por_esfuerzo_alquiler_salario_joven_2024": {
+    "collection": "alquileres",
+    "pipeline": [
+      {
+        "$match": {
+          "year": 2024,
+          "geography.included_in_current_boundary_comparison": true,
+          "rental.monthly_eur": {
+            "$gt": "0"
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "municipios",
+          "localField": "municipality_code",
+          "foreignField": "_id",
+          "as": "municipality"
+        }
+      },
+      {
+        "$unwind": "$municipality"
+      },
+      {
+        "$lookup": {
+          "from": "salarios_juveniles",
+          "let": {
+            "territory_code": "$municipality.territory.code",
+            "year": "$year"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "indicator_code": 31,
+                "geography_level": "territory",
+                "age_group": "18-34",
+                "sex": "total",
+                "$expr": {
+                  "$and": [
+                    {
+                      "$eq": [
+                        "$territory_code",
+                        "$$territory_code"
+                      ]
+                    },
+                    {
+                      "$eq": [
+                        "$year",
+                        "$$year"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "territory_code": 1,
+                "net_monthly_salary_eur": 1,
+                "source": 1
+              }
+            }
+          ],
+          "as": "youth_salary"
+        }
+      },
+      {
+        "$unwind": "$youth_salary"
+      },
+      {
+        "$lookup": {
+          "from": "socioeconomicos",
+          "let": {
+            "code": "$municipality_code",
+            "year": "$year"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "$expr": {
+                  "$and": [
+                    {
+                      "$eq": [
+                        "$municipality_code",
+                        "$$code"
+                      ]
+                    },
+                    {
+                      "$eq": [
+                        "$year",
+                        "$$year"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "indicators.population": 1
+              }
+            }
+          ],
+          "as": "socioeconomic"
+        }
+      },
+      {
+        "$unwind": "$socioeconomic"
+      },
+      {
+        "$addFields": {
+          "indicators.rent_as_share_of_youth_salary_percent": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$rental.monthly_eur",
+                  "$youth_salary.net_monthly_salary_eur"
+                ]
+              },
+              "100"
+            ]
+          },
+          "indicators.money_remaining_after_rent_eur": {
+            "$subtract": [
+              "$youth_salary.net_monthly_salary_eur",
+              "$rental.monthly_eur"
+            ]
+          },
+          "indicators.recommended_max_rent_30_percent_eur": {
+            "$multiply": [
+              "$youth_salary.net_monthly_salary_eur",
+              "0.30"
+            ]
+          },
+          "indicators.rent_minus_recommended_max_eur": {
+            "$subtract": [
+              "$rental.monthly_eur",
+              {
+                "$multiply": [
+                  "$youth_salary.net_monthly_salary_eur",
+                  "0.30"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "municipality_code": 1,
+          "municipality_name": "$municipality.municipality_name",
+          "territory_code": "$municipality.territory.code",
+          "territory_name": "$municipality.territory.name",
+          "year": 1,
+          "population": "$socioeconomic.indicators.population",
+          "deposit_count": "$rental.deposit_count",
+          "monthly_rent_eur": "$rental.monthly_eur",
+          "net_monthly_youth_salary_eur": "$youth_salary.net_monthly_salary_eur",
+          "salary_territory_code": "$youth_salary.territory_code",
+          "salary_scope": {
+            "$literal": "territory_mean_applied_to_municipality"
+          },
+          "rent_as_share_of_youth_salary_percent": "$indicators.rent_as_share_of_youth_salary_percent",
+          "money_remaining_after_rent_eur": "$indicators.money_remaining_after_rent_eur",
+          "recommended_max_rent_30_percent_eur": "$indicators.recommended_max_rent_30_percent_eur",
+          "rent_minus_recommended_max_eur": "$indicators.rent_minus_recommended_max_eur"
+        }
+      },
+      {
+        "$sort": {
+          "rent_as_share_of_youth_salary_percent": 1
+        }
+      }
+    ],
+    "result_count": 72,
+    "results": [
+      {
+        "municipality_code": "48073",
+        "year": 2024,
+        "municipality_name": "Ondarroa",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 8195,
+        "deposit_count": 48,
+        "monthly_rent_eur": "543.44",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "34.28643533123028391167192429022082",
+        "money_remaining_after_rent_eur": "1041.56",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "67.94"
+      },
+      {
+        "municipality_code": "48060",
+        "year": 2024,
+        "municipality_name": "Markina-Xemein",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 5058,
+        "deposit_count": 43,
+        "monthly_rent_eur": "564.67",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "35.62586750788643533123028391167192",
+        "money_remaining_after_rent_eur": "1020.33",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "89.17"
+      },
+      {
+        "municipality_code": "20080",
+        "year": 2024,
+        "municipality_name": "Zumarraga",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 9590,
+        "deposit_count": 109,
+        "monthly_rent_eur": "569.07",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "36.59614147909967845659163987138264",
+        "money_remaining_after_rent_eur": "985.93",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "102.57"
+      },
+      {
+        "municipality_code": "20051",
+        "year": 2024,
+        "municipality_name": "Legazpi",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 8372,
+        "deposit_count": 46,
+        "monthly_rent_eur": "571.67",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "36.76334405144694533762057877813505",
+        "money_remaining_after_rent_eur": "983.33",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "105.17"
+      },
+      {
+        "municipality_code": "01051",
+        "year": 2024,
+        "municipality_name": "Salvatierra/Agurain",
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "population": 5329,
+        "deposit_count": 38,
+        "monthly_rent_eur": "548.11",
+        "net_monthly_youth_salary_eur": "1487",
+        "salary_territory_code": "01",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "36.86012104909213180901143241425689",
+        "money_remaining_after_rent_eur": "938.89",
+        "recommended_max_rent_30_percent_eur": "446.10",
+        "rent_minus_recommended_max_eur": "102.01"
+      },
+      {
+        "municipality_code": "48057",
+        "year": 2024,
+        "municipality_name": "Lekeitio",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7130,
+        "deposit_count": 43,
+        "monthly_rent_eur": "591.86",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "37.34132492113564668769716088328076",
+        "money_remaining_after_rent_eur": "993.14",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "116.36"
+      },
+      {
+        "municipality_code": "48017",
+        "year": 2024,
+        "municipality_name": "Bermeo",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 17053,
+        "deposit_count": 156,
+        "monthly_rent_eur": "594.04",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "37.47886435331230283911671924290221",
+        "money_remaining_after_rent_eur": "990.96",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "118.54"
+      },
+      {
+        "municipality_code": "01002",
+        "year": 2024,
+        "municipality_name": "Amurrio",
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "population": 10413,
+        "deposit_count": 78,
+        "monthly_rent_eur": "578.55",
+        "net_monthly_youth_salary_eur": "1487",
+        "salary_territory_code": "01",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "38.90719569603227975790181573638198",
+        "money_remaining_after_rent_eur": "908.45",
+        "recommended_max_rent_30_percent_eur": "446.10",
+        "rent_minus_recommended_max_eur": "132.45"
+      },
+      {
+        "municipality_code": "20032",
+        "year": 2024,
+        "municipality_name": "Elgoibar",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 11518,
+        "deposit_count": 100,
+        "monthly_rent_eur": "606.15",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "38.98070739549839228295819935691318",
+        "money_remaining_after_rent_eur": "948.85",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "139.65"
+      },
+      {
+        "municipality_code": "20074",
+        "year": 2024,
+        "municipality_name": "Bergara",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 14761,
+        "deposit_count": 85,
+        "monthly_rent_eur": "606.71",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.01672025723472668810289389067524",
+        "money_remaining_after_rent_eur": "948.29",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "140.21"
+      },
+      {
+        "municipality_code": "48090",
+        "year": 2024,
+        "municipality_name": "Balmaseda",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7704,
+        "deposit_count": 65,
+        "monthly_rent_eur": "619.69",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.09716088328075709779179810725552",
+        "money_remaining_after_rent_eur": "965.31",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "144.19"
+      },
+      {
+        "municipality_code": "48034",
+        "year": 2024,
+        "municipality_name": "Ermua",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 15627,
+        "deposit_count": 111,
+        "monthly_rent_eur": "621.59",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.21703470031545741324921135646688",
+        "money_remaining_after_rent_eur": "963.41",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "146.09"
+      },
+      {
+        "municipality_code": "48045",
+        "year": 2024,
+        "municipality_name": "Güeñes",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 6692,
+        "deposit_count": 38,
+        "monthly_rent_eur": "622.5",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.27444794952681388012618296529968",
+        "money_remaining_after_rent_eur": "962.5",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "147.00"
+      },
+      {
+        "municipality_code": "20017",
+        "year": 2024,
+        "municipality_name": "Azkoitia",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 11992,
+        "deposit_count": 106,
+        "monthly_rent_eur": "611.36",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.31575562700964630225080385852090",
+        "money_remaining_after_rent_eur": "943.64",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "144.86"
+      },
+      {
+        "municipality_code": "20077",
+        "year": 2024,
+        "municipality_name": "Urretxu",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 6822,
+        "deposit_count": 33,
+        "monthly_rent_eur": "613.52",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.45466237942122186495176848874598",
+        "money_remaining_after_rent_eur": "941.48",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "147.02"
+      },
+      {
+        "municipality_code": "20059",
+        "year": 2024,
+        "municipality_name": "Oñati",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 11462,
+        "deposit_count": 74,
+        "monthly_rent_eur": "615.89",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "39.60707395498392282958199356913183",
+        "money_remaining_after_rent_eur": "939.11",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "149.39"
+      },
+      {
+        "municipality_code": "48032",
+        "year": 2024,
+        "municipality_name": "Elorrio",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7388,
+        "deposit_count": 44,
+        "monthly_rent_eur": "635.14",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "40.07192429022082018927444794952681",
+        "money_remaining_after_rent_eur": "949.86",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "159.64"
+      },
+      {
+        "municipality_code": "20018",
+        "year": 2024,
+        "municipality_name": "Azpeitia",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 15333,
+        "deposit_count": 124,
+        "monthly_rent_eur": "625.59",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "40.23086816720257234726688102893891",
+        "money_remaining_after_rent_eur": "929.41",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "159.09"
+      },
+      {
+        "municipality_code": "48096",
+        "year": 2024,
+        "municipality_name": "Zalla",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 8229,
+        "deposit_count": 56,
+        "monthly_rent_eur": "646.11",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "40.76403785488958990536277602523659",
+        "money_remaining_after_rent_eur": "938.89",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "170.61"
+      },
+      {
+        "municipality_code": "20049",
+        "year": 2024,
+        "municipality_name": "Lazkao",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 5862,
+        "deposit_count": 49,
+        "monthly_rent_eur": "634.27",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "40.78906752411575562700964630225080",
+        "money_remaining_after_rent_eur": "920.73",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "167.77"
+      },
+      {
+        "municipality_code": "48083",
+        "year": 2024,
+        "municipality_name": "Ortuella",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 8542,
+        "deposit_count": 58,
+        "monthly_rent_eur": "647.02",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "40.82145110410094637223974763406940",
+        "money_remaining_after_rent_eur": "937.98",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "171.52"
+      },
+      {
+        "municipality_code": "20013",
+        "year": 2024,
+        "municipality_name": "Aretxabaleta",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 7208,
+        "deposit_count": 40,
+        "monthly_rent_eur": "635.23",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "40.85080385852090032154340836012862",
+        "money_remaining_after_rent_eur": "919.77",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "168.73"
+      },
+      {
+        "municipality_code": "20030",
+        "year": 2024,
+        "municipality_name": "Eibar",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 27039,
+        "deposit_count": 331,
+        "monthly_rent_eur": "643.84",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "41.40450160771704180064308681672026",
+        "money_remaining_after_rent_eur": "911.16",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "177.34"
+      },
+      {
+        "municipality_code": "48071",
+        "year": 2024,
+        "municipality_name": "Muskiz",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7190,
+        "deposit_count": 35,
+        "monthly_rent_eur": "656.62",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "41.42712933753943217665615141955836",
+        "money_remaining_after_rent_eur": "928.38",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "181.12"
+      },
+      {
+        "municipality_code": "01036",
+        "year": 2024,
+        "municipality_name": "Laudio/Llodio",
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "population": 18093,
+        "deposit_count": 116,
+        "monthly_rent_eur": "618.57",
+        "net_monthly_youth_salary_eur": "1487",
+        "salary_territory_code": "01",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "41.59852051109616677874915938130464",
+        "money_remaining_after_rent_eur": "868.43",
+        "recommended_max_rent_30_percent_eur": "446.10",
+        "rent_minus_recommended_max_eur": "172.47"
+      },
+      {
+        "municipality_code": "20076",
+        "year": 2024,
+        "municipality_name": "Ordizia",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 10286,
+        "deposit_count": 128,
+        "monthly_rent_eur": "647.39",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "41.63279742765273311897106109324759",
+        "money_remaining_after_rent_eur": "907.61",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "180.89"
+      },
+      {
+        "municipality_code": "48002",
+        "year": 2024,
+        "municipality_name": "Abanto y Ciérvana-Abanto Zierbena",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 9387,
+        "deposit_count": 44,
+        "monthly_rent_eur": "661.86",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "41.75772870662460567823343848580442",
+        "money_remaining_after_rent_eur": "923.14",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "186.36"
+      },
+      {
+        "municipality_code": "48001",
+        "year": 2024,
+        "municipality_name": "Abadiño",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7771,
+        "deposit_count": 39,
+        "monthly_rent_eur": "674.9",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "42.58044164037854889589905362776025",
+        "money_remaining_after_rent_eur": "910.1",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "199.40"
+      },
+      {
+        "municipality_code": "48080",
+        "year": 2024,
+        "municipality_name": "Valle de Trápaga-Trapagaran",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 11747,
+        "deposit_count": 47,
+        "monthly_rent_eur": "681.63",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "43.00504731861198738170347003154574",
+        "money_remaining_after_rent_eur": "903.37",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "206.13"
+      },
+      {
+        "municipality_code": "48046",
+        "year": 2024,
+        "municipality_name": "Gernika-Lumo",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 16831,
+        "deposit_count": 134,
+        "monthly_rent_eur": "688.55",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "43.44164037854889589905362776025237",
+        "money_remaining_after_rent_eur": "896.45",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "213.05"
+      },
+      {
+        "municipality_code": "20055",
+        "year": 2024,
+        "municipality_name": "Arrasate/Mondragón",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 21943,
+        "deposit_count": 206,
+        "monthly_rent_eur": "676.94",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "43.53311897106109324758842443729904",
+        "money_remaining_after_rent_eur": "878.06",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "210.44"
+      },
+      {
+        "municipality_code": "20029",
+        "year": 2024,
+        "municipality_name": "Deba",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 5378,
+        "deposit_count": 34,
+        "monthly_rent_eur": "687.19",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "44.19228295819935691318327974276527",
+        "money_remaining_after_rent_eur": "867.81",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "220.69"
+      },
+      {
+        "municipality_code": "20071",
+        "year": 2024,
+        "municipality_name": "Tolosa",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 19961,
+        "deposit_count": 208,
+        "monthly_rent_eur": "693.95",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "44.62700964630225080385852090032154",
+        "money_remaining_after_rent_eur": "861.05",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "227.45"
+      },
+      {
+        "municipality_code": "48084",
+        "year": 2024,
+        "municipality_name": "Sestao",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 27775,
+        "deposit_count": 207,
+        "monthly_rent_eur": "708.21",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "44.68201892744479495268138801261830",
+        "money_remaining_after_rent_eur": "876.79",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "232.71"
+      },
+      {
+        "municipality_code": "48003",
+        "year": 2024,
+        "municipality_name": "Amorebieta-Etxano",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 19301,
+        "deposit_count": 104,
+        "monthly_rent_eur": "714.75",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "45.09463722397476340694006309148265",
+        "money_remaining_after_rent_eur": "870.25",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "239.25"
+      },
+      {
+        "municipality_code": "48011",
+        "year": 2024,
+        "municipality_name": "Arrigorriaga",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 11716,
+        "deposit_count": 73,
+        "monthly_rent_eur": "718.94",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "45.35899053627760252365930599369085",
+        "money_remaining_after_rent_eur": "866.06",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "243.44"
+      },
+      {
+        "municipality_code": "48027",
+        "year": 2024,
+        "municipality_name": "Durango",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 29906,
+        "deposit_count": 290,
+        "monthly_rent_eur": "719.77",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "45.41135646687697160883280757097792",
+        "money_remaining_after_rent_eur": "865.23",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "244.27"
+      },
+      {
+        "municipality_code": "20019",
+        "year": 2024,
+        "municipality_name": "Beasain",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 13846,
+        "deposit_count": 143,
+        "monthly_rent_eur": "707.77",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "45.51575562700964630225080385852090",
+        "money_remaining_after_rent_eur": "847.23",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "241.27"
+      },
+      {
+        "municipality_code": "20075",
+        "year": 2024,
+        "municipality_name": "Villabona",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 5747,
+        "deposit_count": 58,
+        "monthly_rent_eur": "711.25",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "45.73954983922829581993569131832797",
+        "money_remaining_after_rent_eur": "843.75",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "244.75"
+      },
+      {
+        "municipality_code": "48015",
+        "year": 2024,
+        "municipality_name": "Basauri",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 40449,
+        "deposit_count": 281,
+        "monthly_rent_eur": "730.63",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "46.09652996845425867507886435331230",
+        "money_remaining_after_rent_eur": "854.37",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "255.13"
+      },
+      {
+        "municipality_code": "48082",
+        "year": 2024,
+        "municipality_name": "Santurtzi",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 45891,
+        "deposit_count": 339,
+        "monthly_rent_eur": "739.99",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "46.68706624605678233438485804416404",
+        "money_remaining_after_rent_eur": "845.01",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "264.49"
+      },
+      {
+        "municipality_code": "48078",
+        "year": 2024,
+        "municipality_name": "Portugalete",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 45108,
+        "deposit_count": 279,
+        "monthly_rent_eur": "740.92",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "46.74574132492113564668769716088328",
+        "money_remaining_after_rent_eur": "844.08",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "265.42"
+      },
+      {
+        "municipality_code": "20009",
+        "year": 2024,
+        "municipality_name": "Andoain",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 14785,
+        "deposit_count": 95,
+        "monthly_rent_eur": "737.79",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "47.44630225080385852090032154340836",
+        "money_remaining_after_rent_eur": "817.21",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "271.29"
+      },
+      {
+        "municipality_code": "48902",
+        "year": 2024,
+        "municipality_name": "Erandio",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 24194,
+        "deposit_count": 130,
+        "monthly_rent_eur": "752.26",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "47.46119873817034700315457413249211",
+        "money_remaining_after_rent_eur": "832.74",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "276.76"
+      },
+      {
+        "municipality_code": "20040",
+        "year": 2024,
+        "municipality_name": "Hernani",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 20450,
+        "deposit_count": 160,
+        "monthly_rent_eur": "740.46",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "47.61800643086816720257234726688103",
+        "money_remaining_after_rent_eur": "814.54",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "273.96"
+      },
+      {
+        "municipality_code": "48036",
+        "year": 2024,
+        "municipality_name": "Galdakao",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 24804,
+        "deposit_count": 158,
+        "monthly_rent_eur": "757.79",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "47.81009463722397476340694006309148",
+        "money_remaining_after_rent_eur": "827.21",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "282.29"
+      },
+      {
+        "municipality_code": "20063",
+        "year": 2024,
+        "municipality_name": "Oiartzun",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 10383,
+        "deposit_count": 60,
+        "monthly_rent_eur": "743.76",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "47.83022508038585209003215434083601",
+        "money_remaining_after_rent_eur": "811.24",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "277.26"
+      },
+      {
+        "municipality_code": "48013",
+        "year": 2024,
+        "municipality_name": "Barakaldo",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 99551,
+        "deposit_count": 783,
+        "monthly_rent_eur": "772.96",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "48.76719242902208201892744479495268",
+        "money_remaining_after_rent_eur": "812.04",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "297.46"
+      },
+      {
+        "municipality_code": "48069",
+        "year": 2024,
+        "municipality_name": "Mungia",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 17654,
+        "deposit_count": 145,
+        "monthly_rent_eur": "778.42",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "49.11167192429022082018927444794953",
+        "money_remaining_after_rent_eur": "806.58",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "302.92"
+      },
+      {
+        "municipality_code": "20053",
+        "year": 2024,
+        "municipality_name": "Lezo",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 6010,
+        "deposit_count": 49,
+        "monthly_rent_eur": "775.43",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "49.86688102893890675241157556270096",
+        "money_remaining_after_rent_eur": "779.57",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "308.93"
+      },
+      {
+        "municipality_code": "20081",
+        "year": 2024,
+        "municipality_name": "Zumaia",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 10090,
+        "deposit_count": 112,
+        "monthly_rent_eur": "790.2",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "50.81672025723472668810289389067524",
+        "money_remaining_after_rent_eur": "764.8",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "323.70"
+      },
+      {
+        "municipality_code": "48901",
+        "year": 2024,
+        "municipality_name": "Derio",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7405,
+        "deposit_count": 36,
+        "monthly_rent_eur": "816.39",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "51.50725552050473186119873817034700",
+        "money_remaining_after_rent_eur": "768.61",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "340.89"
+      },
+      {
+        "municipality_code": "20072",
+        "year": 2024,
+        "municipality_name": "Urnieta",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 6228,
+        "deposit_count": 49,
+        "monthly_rent_eur": "805.73",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "51.81543408360128617363344051446945",
+        "money_remaining_after_rent_eur": "749.27",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "339.23"
+      },
+      {
+        "municipality_code": "20045",
+        "year": 2024,
+        "municipality_name": "Irun",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 60749,
+        "deposit_count": 632,
+        "monthly_rent_eur": "806.12",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "51.84051446945337620578778135048232",
+        "money_remaining_after_rent_eur": "748.88",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "339.62"
+      },
+      {
+        "municipality_code": "48029",
+        "year": 2024,
+        "municipality_name": "Etxebarri",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 11820,
+        "deposit_count": 74,
+        "monthly_rent_eur": "825.21",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "52.06372239747634069400630914826498",
+        "money_remaining_after_rent_eur": "759.79",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "349.71"
+      },
+      {
+        "municipality_code": "20067",
+        "year": 2024,
+        "municipality_name": "Errenteria",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 39792,
+        "deposit_count": 338,
+        "monthly_rent_eur": "811.09",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "52.16012861736334405144694533762058",
+        "money_remaining_after_rent_eur": "743.91",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "344.59"
+      },
+      {
+        "municipality_code": "20064",
+        "year": 2024,
+        "municipality_name": "Pasaia",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 16838,
+        "deposit_count": 187,
+        "monthly_rent_eur": "811.56",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "52.19035369774919614147909967845659",
+        "money_remaining_after_rent_eur": "743.44",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "345.06"
+      },
+      {
+        "municipality_code": "01059",
+        "year": 2024,
+        "municipality_name": "Vitoria-Gasteiz",
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "population": 251974,
+        "deposit_count": 2280,
+        "monthly_rent_eur": "781.98",
+        "net_monthly_youth_salary_eur": "1487",
+        "salary_territory_code": "01",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "52.58776059179556153328850033624748",
+        "money_remaining_after_rent_eur": "705.02",
+        "recommended_max_rent_30_percent_eur": "446.10",
+        "rent_minus_recommended_max_eur": "335.88"
+      },
+      {
+        "municipality_code": "48043",
+        "year": 2024,
+        "municipality_name": "Gorliz",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 6071,
+        "deposit_count": 31,
+        "monthly_rent_eur": "837.93",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "52.86624605678233438485804416403785",
+        "money_remaining_after_rent_eur": "747.07",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "362.43"
+      },
+      {
+        "municipality_code": "20036",
+        "year": 2024,
+        "municipality_name": "Hondarribia",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 17105,
+        "deposit_count": 170,
+        "monthly_rent_eur": "837.66",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "53.86881028938906752411575562700965",
+        "money_remaining_after_rent_eur": "717.34",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "371.16"
+      },
+      {
+        "municipality_code": "20902",
+        "year": 2024,
+        "municipality_name": "Lasarte-Oria",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 19678,
+        "deposit_count": 145,
+        "monthly_rent_eur": "838.74",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "53.93826366559485530546623794212219",
+        "money_remaining_after_rent_eur": "716.26",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "372.24"
+      },
+      {
+        "municipality_code": "20061",
+        "year": 2024,
+        "municipality_name": "Orio",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 6187,
+        "deposit_count": 63,
+        "monthly_rent_eur": "854.73",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "54.96655948553054662379421221864952",
+        "money_remaining_after_rent_eur": "700.27",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "388.23"
+      },
+      {
+        "municipality_code": "20073",
+        "year": 2024,
+        "municipality_name": "Usurbil",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 6439,
+        "deposit_count": 43,
+        "monthly_rent_eur": "867.7",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "55.80064308681672025723472668810289",
+        "money_remaining_after_rent_eur": "687.3",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "401.20"
+      },
+      {
+        "municipality_code": "48085",
+        "year": 2024,
+        "municipality_name": "Sopela",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 13917,
+        "deposit_count": 118,
+        "monthly_rent_eur": "889.28",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "56.10599369085173501577287066246057",
+        "money_remaining_after_rent_eur": "695.72",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "413.78"
+      },
+      {
+        "municipality_code": "48020",
+        "year": 2024,
+        "municipality_name": "Bilbao",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 344408,
+        "deposit_count": 3275,
+        "monthly_rent_eur": "910.66",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "57.45488958990536277602523659305994",
+        "money_remaining_after_rent_eur": "674.34",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "435.16"
+      },
+      {
+        "municipality_code": "48089",
+        "year": 2024,
+        "municipality_name": "Urduliz",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 5626,
+        "deposit_count": 64,
+        "monthly_rent_eur": "915.74",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "57.77539432176656151419558359621451",
+        "money_remaining_after_rent_eur": "669.26",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "440.24"
+      },
+      {
+        "municipality_code": "48054",
+        "year": 2024,
+        "municipality_name": "Leioa",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 32448,
+        "deposit_count": 207,
+        "monthly_rent_eur": "916.73",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "57.83785488958990536277602523659306",
+        "money_remaining_after_rent_eur": "668.27",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "441.23"
+      },
+      {
+        "municipality_code": "48016",
+        "year": 2024,
+        "municipality_name": "Berango",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 7820,
+        "deposit_count": 59,
+        "monthly_rent_eur": "920.78",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "58.09337539432176656151419558359621",
+        "money_remaining_after_rent_eur": "664.22",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "445.28"
+      },
+      {
+        "municipality_code": "20903",
+        "year": 2024,
+        "municipality_name": "Astigarraga",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 7623,
+        "deposit_count": 57,
+        "monthly_rent_eur": "941.65",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "60.55627009646302250803858520900322",
+        "money_remaining_after_rent_eur": "613.35",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "475.15"
+      },
+      {
+        "municipality_code": "20079",
+        "year": 2024,
+        "municipality_name": "Zarautz",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 23333,
+        "deposit_count": 231,
+        "monthly_rent_eur": "965.15",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "62.06752411575562700964630225080386",
+        "money_remaining_after_rent_eur": "589.85",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "498.65"
+      },
+      {
+        "municipality_code": "48044",
+        "year": 2024,
+        "municipality_name": "Getxo",
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "population": 75306,
+        "deposit_count": 596,
+        "monthly_rent_eur": "1021.74",
+        "net_monthly_youth_salary_eur": "1585",
+        "salary_territory_code": "48",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "64.46309148264984227129337539432177",
+        "money_remaining_after_rent_eur": "563.26",
+        "recommended_max_rent_30_percent_eur": "475.50",
+        "rent_minus_recommended_max_eur": "546.24"
+      },
+      {
+        "municipality_code": "20069",
+        "year": 2024,
+        "municipality_name": "Donostia / San Sebastián",
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "population": 182892,
+        "deposit_count": 2092,
+        "monthly_rent_eur": "1121.71",
+        "net_monthly_youth_salary_eur": "1555",
+        "salary_territory_code": "20",
+        "salary_scope": "territory_mean_applied_to_municipality",
+        "rent_as_share_of_youth_salary_percent": "72.13569131832797427652733118971061",
+        "money_remaining_after_rent_eur": "433.29",
+        "recommended_max_rent_30_percent_eur": "466.50",
+        "rent_minus_recommended_max_eur": "655.21"
+      }
+    ]
+  },
+  "comparativa_territorial_salario_joven_2024": {
+    "collection": "alquileres",
+    "pipeline": [
+      {
+        "$match": {
+          "year": 2024,
+          "geography.included_in_current_boundary_comparison": true,
+          "rental.monthly_eur": {
+            "$gt": "0"
+          },
+          "rental.deposit_count": {
+            "$gt": 0
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "municipios",
+          "localField": "municipality_code",
+          "foreignField": "_id",
+          "as": "municipality"
+        }
+      },
+      {
+        "$unwind": "$municipality"
+      },
+      {
+        "$group": {
+          "_id": {
+            "territory_code": "$municipality.territory.code",
+            "territory_name": "$municipality.territory.name"
+          },
+          "weighted_rent_sum": {
+            "$sum": {
+              "$multiply": [
+                "$rental.monthly_eur",
+                "$rental.deposit_count"
+              ]
+            }
+          },
+          "total_deposits": {
+            "$sum": "$rental.deposit_count"
+          },
+          "municipality_count": {
+            "$sum": 1
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "territory_code": "$_id.territory_code",
+          "territory_name": "$_id.territory_name",
+          "municipality_count": 1,
+          "total_deposits": 1,
+          "weighted_monthly_rent_eur": {
+            "$divide": [
+              "$weighted_rent_sum",
+              "$total_deposits"
+            ]
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "from": "salarios_juveniles",
+          "let": {
+            "territory_code": "$territory_code"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "indicator_code": 31,
+                "year": 2024,
+                "geography_level": "territory",
+                "age_group": "18-34",
+                "sex": "total",
+                "$expr": {
+                  "$eq": [
+                    "$territory_code",
+                    "$$territory_code"
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "net_monthly_salary_eur": 1
+              }
+            }
+          ],
+          "as": "youth_salary"
+        }
+      },
+      {
+        "$unwind": "$youth_salary"
+      },
+      {
+        "$lookup": {
+          "from": "referencias_juventud",
+          "let": {
+            "territory_code": "$territory_code"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "indicator_code": 49,
+                "metric": "rent_access_percent",
+                "year": 2024,
+                "geography_level": "territory",
+                "age_group": "18-34",
+                "sex": "total",
+                "$expr": {
+                  "$eq": [
+                    "$territory_code",
+                    "$$territory_code"
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "value": 1
+              }
+            }
+          ],
+          "as": "observatorio_benchmark"
+        }
+      },
+      {
+        "$unwind": "$observatorio_benchmark"
+      },
+      {
+        "$addFields": {
+          "net_monthly_youth_salary_eur": "$youth_salary.net_monthly_salary_eur",
+          "calculated_rent_share_percent": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$weighted_monthly_rent_eur",
+                  "$youth_salary.net_monthly_salary_eur"
+                ]
+              },
+              "100"
+            ]
+          },
+          "observatorio_rent_share_percent": "$observatorio_benchmark.value"
+        }
+      },
+      {
+        "$addFields": {
+          "difference_percentage_points": {
+            "$subtract": [
+              "$calculated_rent_share_percent",
+              "$observatorio_rent_share_percent"
+            ]
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "territory_code": 1,
+          "territory_name": 1,
+          "year": {
+            "$literal": 2024
+          },
+          "municipality_count": 1,
+          "total_deposits": 1,
+          "weighted_monthly_rent_eur": 1,
+          "net_monthly_youth_salary_eur": 1,
+          "calculated_rent_share_percent": 1,
+          "observatorio_rent_share_percent": 1,
+          "difference_percentage_points": 1
+        }
+      },
+      {
+        "$sort": {
+          "territory_code": 1
+        }
+      }
+    ],
+    "result_count": 3,
+    "results": [
+      {
+        "total_deposits": 2512,
+        "municipality_count": 4,
+        "territory_code": "01",
+        "territory_name": "Araba/Álava",
+        "weighted_monthly_rent_eur": "764.5794585987261146496815286624204",
+        "net_monthly_youth_salary_eur": "1487",
+        "calculated_rent_share_percent": "51.41758295889213951914468921737864",
+        "observatorio_rent_share_percent": "50.2",
+        "difference_percentage_points": "1.21758295889213951914468921737864",
+        "year": 2024
+      },
+      {
+        "total_deposits": 6357,
+        "municipality_count": 33,
+        "territory_code": "20",
+        "territory_name": "Gipuzkoa",
+        "weighted_monthly_rent_eur": "868.9257385559226050023596035865975",
+        "net_monthly_youth_salary_eur": "1555",
+        "calculated_rent_share_percent": "55.87946871742267556285270762614775",
+        "observatorio_rent_share_percent": "54.9",
+        "difference_percentage_points": "0.97946871742267556285270762614775",
+        "year": 2024
+      },
+      {
+        "total_deposits": 8210,
+        "municipality_count": 35,
+        "territory_code": "48",
+        "territory_name": "Bizkaia",
+        "weighted_monthly_rent_eur": "828.4877356881851400730816077953715",
+        "net_monthly_youth_salary_eur": "1585",
+        "calculated_rent_share_percent": "52.27051960177824227590420238456603",
+        "observatorio_rent_share_percent": "51.4",
+        "difference_percentage_points": "0.87051960177824227590420238456603",
+        "year": 2024
+      }
+    ]
+  },
+  "comparativa_salarial_y_esfuerzo_por_edad_2024": {
+    "collection": "salarios_juveniles",
+    "pipeline": [
+      {
+        "$match": {
+          "indicator_code": 31,
+          "year": 2024,
+          "geography_level": "euskadi",
+          "age_group": {
+            "$in": [
+              "18-29",
+              "30-34"
+            ]
+          },
+          "sex": "total"
+        }
+      },
+      {
+        "$lookup": {
+          "from": "referencias_juventud",
+          "let": {
+            "age_group": "$age_group"
+          },
+          "pipeline": [
+            {
+              "$match": {
+                "indicator_code": 49,
+                "metric": "rent_access_percent",
+                "year": 2024,
+                "geography_level": "euskadi",
+                "age_group": {
+                  "$in": [
+                    "18-29",
+                    "30-34"
+                  ]
+                },
+                "sex": "total",
+                "$expr": {
+                  "$eq": [
+                    "$age_group",
+                    "$$age_group"
+                  ]
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "value": 1
+              }
+            }
+          ],
+          "as": "official_rent_share"
+        }
+      },
+      {
+        "$unwind": "$official_rent_share"
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "year": 1,
+          "age_group": 1,
+          "net_monthly_youth_salary_eur": "$net_monthly_salary_eur",
+          "observatorio_rent_share_percent": "$official_rent_share.value",
+          "comparison_scope": {
+            "$literal": "Euskadi, published age margins only"
+          }
+        }
+      },
+      {
+        "$sort": {
+          "age_group": 1
+        }
+      }
+    ],
+    "result_count": 2,
+    "results": [
+      {
+        "year": 2024,
+        "age_group": "18-29",
+        "net_monthly_youth_salary_eur": "1381",
+        "observatorio_rent_share_percent": "59.4",
+        "comparison_scope": "Euskadi, published age margins only"
+      },
+      {
+        "year": 2024,
+        "age_group": "30-34",
+        "net_monthly_youth_salary_eur": "1774",
+        "observatorio_rent_share_percent": "46.2",
+        "comparison_scope": "Euskadi, published age margins only"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "source": "Udalmap, indicador 61 - renta personal disponible",
+  "publisher": "Gobierno Vasco; estadística subyacente de Eustat",
+  "format": "CSV original",
+  "license": "CC BY 4.0",
+  "url": "https://opendata.euskadi.eus/contenidos/estadistica/udalmap_indicador_61/es_def/adjuntos/indicator.csv",
+  "downloaded_at_utc": "2026-11-13T18:50:07.296187+00:00",
+  "http_status": 200,
+  "content_type": "text/csv",
+  "content_length": 49544,
+  "etag": null,
+  "last_modified": "Sun, 08 Nov 2026 04:23:02 GMT",
+  "sha256": "4463da1bb6364e542b3ac8aee4e6abc93cc23bbaa7b1b4eb4b18f4a4588684b0",
+  "file": "datos\\originales\\ingresos\\udalmap_renta_personal_disponible.csv"
+}

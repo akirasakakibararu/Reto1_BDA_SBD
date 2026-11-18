@@ -1,0 +1,15 @@
+{
+  "source": "Udalmap, indicador 162 - población total",
+  "publisher": "Gobierno Vasco",
+  "format": "CSV original",
+  "license": "CC BY 4.0",
+  "url": "https://opendata.euskadi.eus/contenidos/estadistica/udalmap_indicador_162/es_def/adjuntos/indicator.csv",
+  "downloaded_at_utc": "2026-11-13T18:50:07.769144+00:00",
+  "http_status": 200,
+  "content_type": "text/csv",
+  "content_length": 64812,
+  "etag": null,
+  "last_modified": "Sun, 08 Nov 2026 04:28:44 GMT",
+  "sha256": "56c1b72d6b867d94aa151a60d8ebe3f91c9d8faf75dd9c2153e4e930bbe15728",
+  "file": "datos\\originales\\poblacion\\udalmap_poblacion_total.csv"
+}

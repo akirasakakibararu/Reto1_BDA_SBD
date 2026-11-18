@@ -1,0 +1,23 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "temporary_collection": "crud_verificacion_6c9fedeff31640c893d06393dc4984f7",
+  "create": {
+    "acknowledged": true,
+    "inserted_id": "crud-23deb848f7914759a32bd08b624820e5"
+  },
+  "read": {
+    "document_found": true
+  },
+  "update": {
+    "matched_count": 1,
+    "modified_count": 1,
+    "updated_value": "updated"
+  },
+  "delete": {
+    "deleted_count": 1,
+    "document_absent_after_delete": true
+  },
+  "timestamp_utc": "2026-11-13T19:22:00.082653+00:00",
+  "temporary_collection_removed": true
+}

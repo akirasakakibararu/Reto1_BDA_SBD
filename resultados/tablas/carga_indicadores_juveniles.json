@@ -1,0 +1,39 @@
+{
+  "status": "verified",
+  "database": "reto_vivienda",
+  "mongodb_server_version": "9.0.4",
+  "source_sha256": "cec0c7db980ee01708f795f63110fc03ce3df52b22516c9a795cb1ce2d7501e7",
+  "documents_expected": {
+    "salarios_juveniles": 135,
+    "referencias_juventud": 123
+  },
+  "documents_by_collection": {
+    "salarios_juveniles": 135,
+    "referencias_juventud": 123
+  },
+  "bulk_write": {
+    "salarios_juveniles": {
+      "upserted": 0,
+      "modified": 0,
+      "matched": 135
+    },
+    "referencias_juventud": {
+      "upserted": 0,
+      "modified": 0,
+      "matched": 123
+    }
+  },
+  "duplicate_groups": {
+    "salarios_juveniles": 0,
+    "referencias_juventud": 0
+  },
+  "non_decimal_measurements": {
+    "salarios_juveniles": 0,
+    "referencias_juventud": 0
+  },
+  "previous_source_documents_pruned": {
+    "salarios_juveniles": 0,
+    "referencias_juventud": 0
+  },
+  "timestamp_utc": "2026-11-16T15:21:48.000134+00:00"
+}

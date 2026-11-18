@@ -1,0 +1,15 @@
+{
+  "source": "Udalmap REST API, indicador 61 - renta personal disponible",
+  "publisher": "Gobierno Vasco; estadística subyacente de Eustat",
+  "format": "JSON original de API REST",
+  "license": "CC BY 4.0",
+  "url": "https://api.euskadi.eus/udalmap/indicators/61/municipalities?lang=SPANISH",
+  "downloaded_at_utc": "2026-11-13T19:18:40.354236+00:00",
+  "http_status": 200,
+  "content_type": "application/json",
+  "content_length": 158636,
+  "etag": null,
+  "last_modified": null,
+  "sha256": "f4e69a11edc43873051d2343a4cd01800270a91a3ff3d94baee9eaac888c1b60",
+  "file": "datos\\originales\\ingresos\\udalmap_renta_personal_disponible_api.json"
+}

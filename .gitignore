@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.log
+
+# Archivos temporales de Office
+~$*
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Sistema
+Thumbs.db
+.DS_Store
